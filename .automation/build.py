@@ -150,7 +150,7 @@ author: "Nicolas Vuillamy"
 description: "Combine all available linters to automatically validate your sources without configuration !"
 outputs:
   has_updated_sources:
-    description: "0 if no source file has been updated, 1 if source files has been updated"
+    description: "0 if no source file has been updated, 1 if source files have been updated"
 runs:
   using: "docker"
   image: "docker://{ML_DOCKER_IMAGE}:{image_release}"
@@ -208,7 +208,7 @@ author: "Nicolas Vuillamy"
 description: "{flavor_x} Combine all available linters to automatically validate your sources without configuration !"
 outputs:
   has_updated_sources:
-    description: "0 if no source file has been updated, 1 if source files has been updated"
+    description: "0 if no source file has been updated, 1 if source files have been updated"
 runs:
   using: "docker"
   image: "docker://{ML_DOCKER_IMAGE}-{flavor}:{image_release}"
@@ -458,7 +458,7 @@ def generate_linter_dockerfiles():
                 f"| {linter.name} | {docker_image} | {docker_image_badge}  |\n"
             )
 
-    # Update github action workflow
+    # Update GitHub Action workflow
     gha_workflow_yml += ["          ]"]
     replace_in_file(
         f"{REPO_HOME}/.github/workflows/deploy-DEV-linters.yml",
@@ -868,7 +868,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
                     linter.linter_banner_image_url,
                     linter.linter_name,
                     doc_url(linter.linter_url),
-                    "Visit linter Web Site",
+                    "Visit linter website",
                     "center",
                     150,
                 ),
@@ -884,7 +884,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
                     linter.linter_image_url,
                     linter.linter_name,
                     linter.linter_url,
-                    "Visit linter Web Site",
+                    "Visit linter website",
                     100,
                 )
                 + linter.linter_name
@@ -901,7 +901,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
         if hasattr(linter, "disabled") and linter.disabled is True:
             linter_doc_md += [""]
             linter_doc_md += [
-                "_This linter has been temporary disabled in this version_"
+                "_This linter has been temporarily disabled in this version_"
             ]
 
         # Linter text , if defined in YML descriptor
@@ -922,7 +922,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
                     f"- Version in MegaLinter: **{linter_versions[linter.linter_name]}**"
                 ]
         linter_doc_md += [
-            f"- Visit [Official Web Site]({doc_url(linter.linter_url)}){{target=_blank}}",
+            f"- Visit [Official Website]({doc_url(linter.linter_url)}){{target=_blank}}",
         ]
         # Docker image doc
         if linter.cli_docker_image is not None:
@@ -966,7 +966,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
                 "{target=_blank}"
             ]
         linter_doc_md += [""]
-        # Github repo svg preview
+        # GitHub repo svg preview
         repo = get_repo(linter)
         if repo is not None and repo.github is True:
             # pylint: disable=no-member
@@ -978,7 +978,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
             ]
         else:
             logging.warning(
-                f"Unable to find github repository for {linter.linter_name}"
+                f"Unable to find GitHub repository for {linter.linter_name}"
             )
         # Mega-linter variables
         activation_url = MKDOCS_URL_ROOT + "/configuration/#activation-and-deactivation"
@@ -1270,12 +1270,12 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
                         f"| {icon_html} | {md_ide(ide)} | [{ide_extension['name']}]({ide_extension['url']}) | "
                         f"{install_link} |"
                     ]
-        # Mega-linter flavours
+        # Mega-linter flavors
         linter_doc_md += [
             "",
-            "## MegaLinter Flavours",
+            "## MegaLinter Flavors",
             "",
-            "This linter is available in the following flavours",
+            "This linter is available in the following flavors",
             "",
         ]
         linter_doc_md += build_flavors_md_table(
@@ -1288,7 +1288,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
         linter_doc_md += ["### How are identified applicable files", ""]
         if linter.files_sub_directory is not None:
             linter_doc_md += [
-                f"- Activated only if sub-directory `{linter.files_sub_directory}` is found."
+                f"- Activated only if subdirectory `{linter.files_sub_directory}` is found."
                 f" (directory name can be overridden with `{linter.descriptor_id}_DIRECTORY`)"
             ]
         if len(linter.active_only_if_file_found) > 0:
@@ -1332,7 +1332,7 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
             linter_doc_md += [
                 f"{linter.linter_name} is called once on the whole project directory",
                 "",
-                "- filtering can not be done using MegaLinter configuration variables,"
+                "- filtering cannot be done using MegaLinter configuration variables,"
                 f"it must be done using {linter.linter_name} configuration or ignore file (if existing)",
                 f"- `VALIDATE_ALL_CODEBASE: false` does not make {linter.linter_name} analyze only updated files",
             ]
@@ -1482,7 +1482,7 @@ def update_mkdocs_and_workflow_yml_with_flavors():
         "# flavors-end",
         "\n".join(mkdocs_yml),
     )
-    # Update Github actions workflow files
+    # Update GitHub Actions workflow files
     replace_in_file(
         f"{REPO_HOME}/.github/workflows/deploy-BETA-flavors.yml",
         "# flavors-start",
@@ -1711,7 +1711,7 @@ def md_ide_install_link(ide, ide_extension):
                 f"https://plugins.jetbrains.com/embeddable/install/{item_name}"
             )
             return f'<iframe frameborder="none" width="245px" height="48px" src="{iframe_content}"></iframe>'
-    return f"[Visit Web Site]({ide_extension['url']}){{target=_blank}}"
+    return f"[Visit Website]({ide_extension['url']}){{target=_blank}}"
 
 
 def md_get_install_button(key):
@@ -2141,7 +2141,7 @@ def generate_json_schema_enums():
         outfile.write("\n")
 
 
-# Collect linters info from linter url, later used to build link preview card within linter documentation
+# Collect linters info from linter URL, later used to build link preview card within linter documentation
 def collect_linter_previews():
     linters = megalinter.linter_factory.list_all_linters()
     # Read file
@@ -2225,7 +2225,7 @@ def generate_documentation_all_linters():
         md_url = (
             f"[Repository]({linter.linter_repo}){{target=_blank}}"
             if hasattr(linter, "linter_repo") and linter.linter_repo is not None
-            else f"[Web Site]({linter.linter_url}){{target=_blank}}"
+            else f"[Website]({linter.linter_url}){{target=_blank}}"
         )
         md_linter_name = f"[**{linter.linter_name}**]({url}){{target=_blank}}"
         # version
@@ -2269,7 +2269,7 @@ def generate_documentation_all_linters():
             license = ""
             md_license = "<!-- -->"
             linter_license_md_file = None
-            # get license from github api
+            # Get license from GitHub API
             repo = get_github_repo(linter)
             if repo is not None:
                 repo = linter.linter_repo.split("https://github.com/", 1)[1]
@@ -2284,7 +2284,7 @@ def generate_documentation_all_linters():
                     r = session.get(api_github_url, headers=api_github_headers)
                 except requests.exceptions.ConnectionError as e:
                     logging.warning(
-                        "Connection error - Unable to get info from github api: "
+                        "Connection error - Unable to get info from GitHub API: "
                         + str(e)
                     )
                     leave = True
@@ -2505,7 +2505,7 @@ def get_repository_badge_url(linter):
     return badge
 
 
-# get github repo info using api
+# get GitHub repo info using API
 def get_github_repo_info(repo):
     api_github_url = f"https://api.github.com/repos/{repo}"
     api_github_headers = {"content-type": "application/json"}
@@ -2523,14 +2523,14 @@ def get_github_repo_info(repo):
     return {}
 
 
-# Refresh github users info
+# Refresh GitHub users info
 def refresh_users_info():
     with open(USERS_FILE, "r", encoding="utf-8") as json_file:
         megalinter_users = json.load(json_file)
     repositories = megalinter_users["repositories"]
     updated_repositories = []
     for repo_item in repositories:
-        # get stargazers from github api
+        # get stargazers from GitHub API
         if repo_item["repo_url"] and repo_item["repo_url"].startswith(
             "https://github.com"
         ):

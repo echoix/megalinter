@@ -7,7 +7,7 @@ We're thrilled that you'd like to contribute to this project. Your help is essen
 
 [Pull Requests][pulls] are used for adding new playbooks, roles, and documents to the repository, or editing the existing ones.
 
-### Pre-requisites
+### Prerequisites
 
 - You need [**Python 3**](https://www.python.org/downloads/) (version 3.7 minimum) and [**Node.js** (14+)](https://nodejs.org/en/download/) to be installed on your computer.
   - If you have issues running Python on Windows, you can uninstall it then reinstall it using [this video tutorial](https://www.youtube.com/watch?v=uDbDIhR76H4), then copy python.exe and name it python3.exe
@@ -65,7 +65,7 @@ _(if you have a permission denied issue on Windows, please check [this solution]
 4. Update **CHANGELOG.md** (the root one, not the one in /docs)
 5. Run `bash build.sh` to regenerate dockerfile from updated sources (run `bash build.sh --doc` if you want to also regenerate documentation)
 6. Push to your fork and [submit a pull request][pr]
-7. Pat your self on the back and wait for your pull request to be reviewed and merged.
+7. Pat yourself on the back and wait for your pull request to be reviewed and merged.
 
 Here are a few things you can do that will increase the likelihood of your pull request being accepted:
 
@@ -82,7 +82,7 @@ Draft pull requests are also welcome to get feedback early on, or if there is so
 
 Each linter must:
 
-- Be defined in a descriptor file. Few properties are required ([see json schema documentation](https://megalinter.github.io/json-schemas/descriptor.html)), but please think to input doc URLs and `ide` section for documentation
+- Be defined in a descriptor file. Few properties are required ([see json schema documentation](https://megalinter.github.io/json-schemas/descriptor.html)), but please think to input doc URLs and `ide` section for documentation.
 - Have two test files in `.automation/test`: one for success and one for failure
 
 Then run `bash build.py` and it will generate all the rest !

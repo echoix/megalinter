@@ -5,7 +5,7 @@
 
 <!-- header-logo-start -->
 <div align="center">
-  <a href="https://megalinter.github.io" target="blank" title="Visit MegaLinter Web Site">
+  <a href="https://megalinter.github.io" target="blank" title="Visit MegaLinter Website">
     <img src="https://github.com/oxsecurity/megalinter/raw/main/docs/assets/images/mega-linter-logo.png" alt="MegaLinter" height="200px">
   </a>
 </div>
@@ -38,7 +38,7 @@ Supporting [**49** languages](#languages), [**21** formats](#formats), [**20** t
 <!-- welcome-phrase-end -->
 
 <!-- online-doc-start -->
-See [**Online Documentation Web Site which has a much easier user navigation than this README**](https://megalinter.github.io/)
+See [**Online Documentation website which has a much easier user navigation than this README**](https://megalinter.github.io/)
 <!-- online-doc-end -->
 
 ________
@@ -140,7 +140,7 @@ _Github PR reporter_
 
 Projects need to contain clean code, in order to **avoid technical debt**, that makes **evolutive maintenance harder and time consuming**.
 
-By using [**code formatters and code linters**](#supported-linters), you ensure that your code base is **easier to read** and **respects best practices**, from the kick-off to each step of the project lifecycle
+By using [**code formatters and code linters**](#supported-linters), you ensure that your code base is **easier to read** and **respects best practices**, from the kick-off to each step of the project lifecycle.
 
 Not all developers have the good habit to use linters in their IDEs, making code reviews harder and longer to process
 
@@ -319,12 +319,12 @@ Just run `npx mega-linter-runner --install` at the root of your repository and a
 
 ### Manual installation
 
-The following instructions examples are using to latest MegaLinter stable version (**v5** , always corresponding to the [latest release](https://github.com/oxsecurity/megalinter/releases))
+The following instructions examples are using to latest MegaLinter stable version (**v6** , always corresponding to the [latest release](https://github.com/oxsecurity/megalinter/releases))
 
 - GitHub Action: oxsecurity/megalinter@v6
 - Docker image: oxsecurity/megalinter:v6
 
-You can also use **beta** version (corresponding to the content of main branch)
+You can also use **beta** version (corresponding to the content of the `main` branch).
 
 - GitHub Action: oxsecurity/megalinter@beta
 - Docker image: oxsecurity/megalinter:beta
@@ -340,7 +340,7 @@ You can also use **beta** version (corresponding to the content of main branch)
 **NOTES:**
 
 - If you pass the _Environment_ variable `GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}` in your workflow, then the **MegaLinter** will mark the status of each individual linter run in the Checks section of a pull request. Without this you will only see the overall status of the full run. There is no need to set the **GitHub** Secret as it is automatically set by GitHub, it only needs to be passed to the action.
-- You can also **use it outside of GitHub Actions** (CircleCI, Azure Pipelines, Jenkins, GitLab, or even locally with a docker run) , and have status on Github Pull Request if `GITHUB_TARGET_URL` environment variable exists.
+- You can also **use it outside of GitHub Actions** (CircleCI, Azure Pipelines, Jenkins, GitLab, or even locally with a docker run), and have status on GitHub Pull Request if `GITHUB_TARGET_URL` environment variable exists.
 
 In your repository you should have a `.github/workflows` folder with **GitHub** Action similar to below:
 
@@ -441,7 +441,7 @@ jobs:
 
 Use the following Azure Pipelines [YAML template](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema)
 
-You may activate [File.io reporter](https://megalinter.github.io/reporters/FileIoReporter/) or [E-mail reporter](https://megalinter.github.io/reporters/EmailReporter/) to access detailed logs and fixed source
+You may activate [File.io reporter](https://megalinter.github.io/reporters/FileIoReporter/) or [E-mail reporter](https://megalinter.github.io/reporters/EmailReporter/) to access detailed logs and fixed source.
 
 ```yaml
   # Run MegaLinter to detect linting and security issues
@@ -757,7 +757,7 @@ Only for GitHub Action Workflow file if you use it:
 Notes:
 
 - You can use [**Updated sources reporter**](https://github.com/oxsecurity/megalinter/tree/main/docs/reporters/UpdatedSourcesReporter.md) if you do not want fixes to be automatically applied on git branch, but **download them in a zipped file** and manually **extract them in your project**
-- If used, **APPLY_FIXES_EVENT** and **APPLY_FIXES_MODE** can not be defined in `.mega-linter.yml`config file, they must be set as environment variables
+- If used, **APPLY_FIXES_EVENT** and **APPLY_FIXES_MODE** cannot be defined in `.mega-linter.yml`config file, they must be set as environment variables
 
 - If you use **APPLY_FIXES**, add the following line in your `.gitignore file`
 
@@ -775,7 +775,7 @@ See variables related to a single linter behavior in [linters documentations](#s
 
 ### Pre-commands
 
-MegaLinter can run custom commands before running linters (for example, installing an plugin required by one of the linters you use)
+MegaLinter can run custom commands before running linters (for example, installing a plugin required by one of the linters you use)
 
 Example in `.mega-linter.yml` config file
 
@@ -900,7 +900,7 @@ _Note:_ IF you did not use `MegaLinter` as GitHub Action name, please read [GitH
 <!-- plugins-section-start -->
 ## Plugins
 
-For security reasons, we try to embed in MegaLinter only linters that are widely adopted by open-source community.
+For security reasons, we try to embed in MegaLinter only linters that are widely adopted by the open-source community.
 
 But any linter can be callable within MegaLinter thanks to the plugin mechanism !
 
@@ -929,11 +929,11 @@ Submit a PR if you want your plugin to appear here :)
 
 ### Create plugins
 
-You can implement your own descriptors and load them as plugins during MegaLinter runtime
+You can implement your own descriptors and load them as plugins during MegaLinter runtime.
 
 - Descriptor format is exactly the same than [MegaLinter embedded ones](https://github.com/oxsecurity/megalinter/tree/main/megalinter/descriptors) ([see json schema documentation](https://megalinter.github.io/json-schemas/descriptor.html))
 - Plugins descriptor files must be named **\*\*.megalinter-descriptor.yml** and respect [MegaLinter Json Schema](https://github.com/oxsecurity/megalinter/blob/main/megalinter/descriptors/schemas/megalinter-descriptor.jsonschema.json)
-- Plugins must be hosted in a url containing **\*\*/mega-linter-plugin-\*\*/**
+- Plugins must be hosted in a URL containing **\*\*/mega-linter-plugin-\*\*/**
 - File URLs must conform to the same directory and file naming criteria as defined above.
 
 #### Limitations
@@ -955,7 +955,7 @@ You can implement your own descriptors and load them as plugins during MegaLinte
 <!-- frequently-asked-questions-section-start -->
 ## Frequently Asked Questions
 
-> My repo CI already have linters and they are perfectly working, so why do I need MegaLinter ?
+> My repo CI already has linters and they are perfectly working, so why do I need MegaLinter ?
 
 You can perfectly **continue using your installed linters** and deactivate them in `.mega-linter.yml`. For example, in a javascript project using eslint, you can configure MegaLinter with `DISABLE: JAVASCRIPT`. That way, you will benefit from both your installed linters but also from other MegaLinter linters checking JSON, YAML, Markdown, Dockerfile, Bash, spelling mistakes, dead URLs...
 
@@ -1068,7 +1068,7 @@ Even if I disagree with their decision to remain in bash, the core team has alwa
 <!-- mega-linter-vs-super-linter-section-start -->
 ## MegaLinter vs Super-Linter
 
-The hard-fork of Super-Linter to be rewritten in Python is not just a language switch: use of python flexibility and libraries allowed to define lots of additional functions described below
+The hard-fork of Super-Linter to be rewritten in Python is not just a language switch: use of python flexibility and libraries allowed to define lots of additional functions described below.
 
 ### Performances
 
@@ -1082,13 +1082,13 @@ The hard-fork of Super-Linter to be rewritten in Python is not just a language s
 
 ### Automatically apply formatting and fixes
 
-MegaLinter can [**automatically apply fixes performed by linters**](#apply-fixes), and **push them to the same branch**, or **create a Pull Request** that you can validate
+MegaLinter can [**automatically apply fixes performed by linters**](#apply-fixes), and **push them to the same branch**, or **create a Pull Request** that you can validate.
 
-This is pretty handy, especially for linter errors related to formatting (in that case, you don't have any manual update to perform)
+This is pretty handy, especially for linter errors related to formatting (in that case, you don't have any manual update to perform).
 
 ### Run locally
 
-MegaLinter can be run locally thanks to [mega-linter-runner](https://megalinter.github.io/mega-linter-runner/)
+MegaLinter can be run locally thanks to [mega-linter-runner](https://megalinter.github.io/mega-linter-runner/).
 
 ### Reports
 
@@ -1096,7 +1096,7 @@ MegaLinter can be run locally thanks to [mega-linter-runner](https://megalinter.
 
 - Accuracy: Count the total number of errors and not only the number of files in error
 - Show linter version and applied filters for each linter processed
-- Reports stored as artefacts on GitHub Action run or other remote files
+- Reports stored as artifacts on GitHub Action run or other remote files
   - General log
   - One report file by linter
 
@@ -1135,7 +1135,7 @@ MegaLinter can be run locally thanks to [mega-linter-runner](https://megalinter.
   - ENABLE_LINTERS = list of linters to apply lint on codebase (default: all)
   - DISABLE = list of languages and formats to skip (default: none)
   - DISABLE_LINTERS = list of linters to skip (default: none)
-  - Variables VALIDATE_XXX are still taken in account (but should not be used in association with ENABLE and DISABLE variables)
+  - Variables VALIDATE_XXX are still taken into account (but should not be used in association with ENABLE and DISABLE variables)
 
 ### Enhanced Documentation
 
@@ -1147,7 +1147,7 @@ MegaLinter can be run locally thanks to [mega-linter-runner](https://megalinter.
   - **All variables** that can be used with this linter
   - List of **file extensions, names and filters** applied by the linter
   - Link to **MegaLinter default linter configuration**
-  - Link to linter Web-Site
+  - Link to linter website
   - Link to official page explaining **how to customize the linter rules**
   - Link to official page explaining **how to disable rules from source comments**
   - **Examples** of linter command line calls behind the hood
@@ -1172,8 +1172,8 @@ For linters less commonly used, MegaLinters offers a plugins architecture so any
 
 - Refactoring runtime in Python, for easier handling than bash thanks to [classes](https://github.com/oxsecurity/megalinter/tree/main/megalinter) and python modules
 - Everything related to each linter [in a single descriptor YML file](https://github.com/oxsecurity/megalinter/tree/main/megalinter/descriptors)
-  - easier evolutive maintenance
-  - less conflicts to manage between PRs.
+  - Easier evolutive maintenance
+  - Less conflicts to manage between PRs.
   - Few special cases require a [python linter class](https://github.com/oxsecurity/megalinter/tree/main/megalinter/descriptors))
 - [Default behaviours for all linters](https://github.com/oxsecurity/megalinter/blob/main/megalinter/Linter.py), with possibility to override part of them for special cases
 - Hierarchical architecture: Apply fixes and new behaviours to all linters with a single code update
@@ -1205,18 +1205,18 @@ For linters less commonly used, MegaLinters offers a plugins architecture so any
 
 - Tool to upgrade user repos configuration files using `npx mega-linter-runner --upgrade` (will upgrade references to _nvuillam/mega-linter_ into _oxsecurity/megalinter_)
 
-- Migration from github individual repo **nvuillam/mega-linter** to github organization repo **oxsecurity/megalinter**
+- Migration from GitHub individual repo **nvuillam/mega-linter** to GitHub organization repo **oxsecurity/megalinter**
 
 - Migration from docker hub space **nvuillam** to space **megalinter**
   - Docker images are now **oxsecurity/megalinter** or **oxsecurity/megalinter-FLAVOR**
 
 - Documentation is now hosted at <https://megalinter.github.io/>
 
-- Version management: Now mega-linter docker images, github action and mega-linter-runner versions are aligned
+- Version management: Now mega-linter Docker images, GitHub action and mega-linter-runner versions are aligned
   - **latest** for latest official release
   - **beta** for current content of main branch
   - **alpha** for current content of alpha branch
-  - docker image, github action and mega-linter-runner can still be called with exact version number
+  - Docker image, GitHub action and mega-linter-runner can still be called with exact version number
 
 - Being more inclusive: rename `master` branch into `main`
 
