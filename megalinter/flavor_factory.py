@@ -38,9 +38,14 @@ def list_flavor_linters(flavor_id):
     return flavor_definition["linters"]
 
 
-def list_megalinter_flavors():
+def list_megalinter_flavors() -> dict[str, dict[str, str]]:
     flavors = {
-        "all": {"label": "MegaLinter for any type of project"},
+        "all": {
+            "label": "MegaLinter for any type of project",
+            "supported_platforms": {
+                "linux/amd64": {}
+            }
+        },
         "ci_light": {
             "label": "Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas, XML)"
         },
@@ -52,7 +57,13 @@ def list_megalinter_flavors():
             "label": "Optimized for JAVASCRIPT or TYPESCRIPT based projects"
         },
         "php": {"label": "Optimized for PHP based projects"},
-        "python": {"label": "Optimized for PYTHON based projects"},
+        "python": {
+            "label": "Optimized for PYTHON based projects",
+            "supported_platforms": {
+                "linux/amd64": {},
+                "linux/arm64": {}
+            }
+        },
         "ruby": {"label": "Optimized for RUBY based projects"},
         "rust": {"label": "Optimized for RUST based projects"},
         "salesforce": {"label": "Optimized for Salesforce based projects"},

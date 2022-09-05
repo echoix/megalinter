@@ -103,11 +103,17 @@ DESCRIPTORS_FOR_BUILD_CACHE = None
 
 
 # Generate one Dockerfile by MegaLinter flavor
-def generate_all_flavors():
+def generate_all_flavors(supported_platforms: list[str] = None):
+    if supported_platforms is None:
+        # supported_platforms = ["linux/amd64"]
+        supported_platforms = ["linux/amd64", "linux/arm64test", "linux/386"]
+
+    # old_flavors = megalinter.flavor_factory.list_megalinter_flavors()
     flavors = megalinter.flavor_factory.list_megalinter_flavors()
+    # flavors = {k: v if "supported_platforms" in v else v.update({"supported_platforms":{"linux/amd64": {}}}) for (k, v) in flavors.items()}
 
     for flavor, flavor_info in flavors.items():
-        generate_flavor(flavor, flavor_info)
+        generate_flavor(flavor, flavor_info, supported_platforms=[x for x in supported_platforms])
     update_mkdocs_and_workflow_yml_with_flavors()
     if UPDATE_DOC is True:
         try:
@@ -120,29 +126,91 @@ def generate_all_flavors():
             logging.warning("Unable to update docker pull counters: " + str(e))
 
 
-# Automatically generate Dockerfile , action.yml and upgrade all_flavors.json
-def generate_flavor(flavor, flavor_info):
+# Automatically generate Dockerfile, action.yml and upgrade all_flavors.json
+def generate_flavor(flavor, flavor_info: dict[str, str] | dict[str, Any], supported_platforms: list[str] = None):
+    if supported_platforms is None:
+        supported_platforms = ["linux/amd64"]
+        # supported_platforms = ["linux/amd64", "linux/arm64test", "linux/386"]
     descriptor_and_linters = []
     flavor_descriptors = []
     flavor_linters = []
+    flavor_supported_platforms = dict()
+    flavor_info.setdefault("supported_platforms", {"linux/amd64":{}})
+
     # Get install instructions at descriptor level
     descriptor_files = megalinter.linter_factory.list_descriptor_files()
+    # descriptor_supported_platforms = ["linux/amd64"]
     for descriptor_file in descriptor_files:
         with open(descriptor_file, "r", encoding="utf-8") as f:
             descriptor = yaml.load(f, Loader=yaml.FullLoader)
+
+            # Set default `supported_platforms` if it wasn't included in the descriptor-level `supported_platforms`
+            descriptor.setdefault("supported_platforms", dict(platform=["linux/amd64", ]))
+            descriptor["supported_platforms"] = descriptor["supported_platforms"] if descriptor["supported_platforms"] is not None else dict(platform=["linux/amd64", ])
+
+            # Set the default platform at descriptor-level if `descriptor_supported_platforms` exists,
+            # but `platform` either doesn't exist or isn't set to at least the default platform.
+            descriptor["supported_platforms"].setdefault("platform", ["linux/amd64", ])
+            descriptor["supported_platforms"]["platform"] = descriptor["supported_platforms"]["platform"] if descriptor["supported_platforms"]["platform"] is not None else ["linux/amd64", ]
+
             if (
-                match_flavor(descriptor, flavor, flavor_info) is True
-                and "install" in descriptor
+                match_flavor(descriptor, flavor, flavor_info, supported_platforms) is True
+                # and (("install" in descriptor) ) # or
+                # (("supported_platforms" in descriptor) and
+                #  (1==1)))
             ):
                 descriptor_and_linters += [descriptor]
                 flavor_descriptors += [descriptor["descriptor_id"]]
+
+                # Default value of a descriptor's "supported_platforms" "platform"s list,
+                # used if "supported_platforms" is omitted
+                # descriptor_supported_platforms = ["linux/amd64"]
+
+                descriptor_supported_platforms = descriptor["supported_platforms"].get("platform", ["linux/amd64",])
+
+                effective_descriptor_supported_platforms = []
+                # if "supported_platforms" in descriptor:
+                #     if descriptor["supported_platforms"] is not None:
+                #         # print('descriptor["supported_platforms"] is not None', descriptor["supported_platforms"])
+                #         if "platform" in descriptor["supported_platforms"]:
+                #             if descriptor["supported_platforms"]["platform"] is not None:
+                #                 descriptor_supported_platforms = descriptor["supported_platforms"]["platform"]
+                #     else:
+                #         # print('descriptor["supported_platforms"] is not None', "false", descriptor["supported_platforms"])
+                # else:
+                #     print('if "supported_platforms" in descriptor:', "False")
+                #     # descriptor_supported_platforms = ["linux/amd64"]
+
+                effective_descriptor_supported_platforms = [x for x in descriptor_supported_platforms if
+                                                            x in supported_platforms and x in flavor_info.get("supported_platforms", {"linux/amd64":{}}) ]
+                if effective_descriptor_supported_platforms is not None:
+                    for _descriptor_platform in effective_descriptor_supported_platforms:
+                        if _descriptor_platform not in flavor_supported_platforms:
+                            flavor_supported_platforms.update({_descriptor_platform: dict(
+                                descriptors=list([descriptor["descriptor_id"],]),linters=list())})
+                        else:
+                            flavor_supported_platforms[_descriptor_platform]["descriptors"] += [descriptor["descriptor_id"]]
+
     # Get install instructions at linter level
     linters = megalinter.linter_factory.list_all_linters()
     requires_docker = False
     for linter in linters:
-        if match_flavor(vars(linter), flavor, flavor_info) is True:
+        effective_linter_supported_platforms = []
+        if match_flavor(vars(linter), flavor, flavor_info, supported_platforms) is True:
             descriptor_and_linters += [vars(linter)]
             flavor_linters += [linter.name]
+
+            effective_linter_supported_platforms = [x for x in descriptor_supported_platforms if
+                                                        x in supported_platforms and x in flavor_info.get(
+                                                            "supported_platforms", {"linux/amd64": {}})]
+            if effective_linter_supported_platforms is not None:
+                for _linter_platform in effective_linter_supported_platforms:
+                    if _linter_platform not in flavor_supported_platforms:
+                        flavor_supported_platforms.update({_linter_platform: dict(descriptors=list(),
+                            linters=list([linter.name,]))})
+                    else:
+                        flavor_supported_platforms[_linter_platform]["linters"] += [linter.name,]
+
             if linter.cli_docker_image is not None:
                 requires_docker = True
     # Initialize Dockerfile
@@ -174,15 +242,18 @@ branding:
     else:
         # Flavor json
         flavor_file = f"{FLAVORS_DIR}/{flavor}/flavor.json"
-        if os.path.isfile(flavor_file):
-            with open(flavor_file, "r", encoding="utf-8") as json_file:
-                flavor_info = json.load(json_file)
+        # if os.path.isfile(flavor_file):
+        #     with open(flavor_file, "r", encoding="utf-8") as json_file:
+        #         flavor_info = json.load(json_file)
         flavor_info["descriptors"] = flavor_descriptors
         flavor_info["linters"] = flavor_linters
+        flavor_info["supported_platforms"] = flavor_supported_platforms
+
         os.makedirs(os.path.dirname(flavor_file), exist_ok=True)
         with open(flavor_file, "w", encoding="utf-8") as outfile:
             json.dump(flavor_info, outfile, indent=4, sort_keys=True)
             outfile.write("\n")
+
         # Write in global flavors files
         with open(GLOBAL_FLAVORS_FILE, "r", encoding="utf-8") as json_file:
             global_flavors = json.load(json_file)
@@ -190,6 +261,7 @@ branding:
         with open(GLOBAL_FLAVORS_FILE, "w", encoding="utf-8") as outfile:
             json.dump(global_flavors, outfile, indent=4, sort_keys=True)
             outfile.write("\n")
+
         # Flavored dockerfile
         dockerfile = f"{FLAVORS_DIR}/{flavor}/Dockerfile"
         if not os.path.isdir(os.path.dirname(dockerfile)):
@@ -364,18 +436,100 @@ def build_dockerfile(
     )
 
 
-def match_flavor(item, flavor, flavor_info):
+def match_flavor(item, flavor: str, flavor_info, flavor_platforms: list[str] = None):
+    """
+    Checks if the given `item` should be part of the flavor.
+
+    :param item: The properties of a linter or descriptor.
+            If it is a descriptor,
+            usually this comes from the parsed .megalinter-descriptor.yml file
+            (a dictionnary).
+            If it is a linter, it is usually a dictionary from calling `vars(linter)`
+            of a linter object (a linter object from :py:class:`megalinter.Linter.Linter`).
+            It is considered a linter if it contains a `descriptor_supported_platforms`
+            attribute, since megalinter.linter_factory.build_descriptor_linters(...)
+            handles the default values validation before creating the linter_class.
+    :param flavor: The flavor name
+    :param flavor_info: A flavor's information, usually a value of the flavors dictionary
+            returned by :py:func:`megalinter.flavor_factory.list_megalinter_flavors()`
+            Can contain keys like `"strict"`, or `"supported_platforms"` like :
+                >>> _flavor_info = {
+                >>>     "label": "Optimized for PYTHON based projects",
+                >>>     "supported_platforms": {
+                >>>         "linux/amd64": {},
+                >>>         "linux/arm64": {}
+                >>>     },
+                >>>     "strict": False,
+                >>> },
+
+                If "supported_platforms" is not present, the default "linux/amd64"
+                will be considered.
+    :param flavor_platforms: The list of "supported_platforms" that is being generated.
+            This is used to filter out descriptors and linters that aren't available
+            in the currently generated platform. If this argument is None (default),
+            no filtering will be done.
+    :return: Returns `True` if the `item` should be included in the `flavor`,
+            aka item matches the flavor
+
+    """
+
     is_strict = "strict" in flavor_info and flavor_info["strict"] is True
-    if "disabled" in item and item["disabled"] is True:
-        return
-    if (
+
+    # If flavor_platforms is checked,  then verify that flavor_info has at least
+    # one supported platform included in the platforms that we are considering
+    # for the build (flavor_platforms)
+    flavor_platforms_match = False
+    if flavor_platforms is None:
+        flavor_platforms_match = True
+    else:
+        flavor_platforms_match = any(x for x in flavor_info.get("supported_platforms", {"linux/amd64": {}}) if     (flavor_platforms is not None and x in flavor_platforms))
+
+    if not flavor_platforms_match:
+        return False
+
+    # Then, check if the item's supported_platforms match the flavor_info and
+    # the flavor_platforms. We need TODO
+    item_supported_platform_linter = []
+    if item is not None:
+        if "descriptor_supported_platforms" in item and "platform" in item.get("descriptor_supported_platforms", dict(platform=["linux/amd64", ])):
+            if "supported_platforms" in item and "platform" in item.get("supported_platforms",  dict(platform=["linux/amd64", ])):
+                item_supported_platform_linter = [x for x in item.get("supported_platforms",  dict(platform=["linux/amd64", ])).get("platform",["linux/amd64",]) if x in item.get("descriptor_supported_platforms", dict(platform=["linux/amd64", ])).get("platform", ["linux/amd64",])]
+        elif "supported_platforms" in item and "platform" in item.get("supported_platforms",  dict(platform=["linux/amd64", ])):
+            item_supported_platform_linter = [x for x in
+                                              item.get("supported_platforms", dict(platform=["linux/amd64", ])).get(
+                                                  "platform", ["linux/amd64", ]) ]
+
+
+    # item_supported_platform_linter_descriptor = [
+    #     x for x in item.get("supported_platforms") if "descriptor_supported_platforms" in item
+    # ]
+    items_platforms_match = any(x for x in item_supported_platform_linter if ((x in flavor_info.get("supported_platforms", {"linux/amd64": {}})) and (x in flavor_platforms if flavor_platforms is not None else True )))
+
+    if not items_platforms_match:
+        return False
+    # flavor_info_supported_platforms = flavor_info.get("supported_platforms","linux/amd64" )
+    # ["supported_platforms"] if (("supported_platforms" in flavor_info) and
+
+    # Verifies that at least one of the flavor's supported platform exists in TODO
+    # platform_match = True
+    # if flavor_platforms is not None:
+    #   if
+    # platform_match = (flavor_platforms is None) or ()
+
+    # platform_match = True if flavor_platforms is None or False
+    # if flavor_platforms is None:
+    # else:
+
+    if item is not None and "disabled" in item and item["disabled"] is True:
+        return False
+    if (item is not None and
         "descriptor_flavors_exclude" in item
         and flavor in item["descriptor_flavors_exclude"]
     ):
         return False
     elif flavor == "all":
         return True
-    elif "descriptor_flavors" in item:
+    elif item is not None and "descriptor_flavors" in item:
         if flavor in item["descriptor_flavors"] or (
             "all_flavors" in item["descriptor_flavors"]
             and not flavor.endswith("_light")
@@ -1156,9 +1310,9 @@ def process_type(linters_by_type, type1, type_label, linters_tables_md):
         # Pre/post commands
         linter_doc_md += [
             f"| {linter.name}_PRE_COMMANDS | List of bash commands to run before the linter"
-            f"| {dump_as_json(linter.pre_commands,'None')} |",
+            f"| {dump_as_json(linter.pre_commands, 'None')} |",
             f"| {linter.name}_POST_COMMANDS | List of bash commands to run after the linter"
-            f"| {dump_as_json(linter.post_commands,'None')} |",
+            f"| {dump_as_json(linter.post_commands, 'None')} |",
         ]
         add_in_config_schema_file(
             [
