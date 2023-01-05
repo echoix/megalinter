@@ -1,12 +1,15 @@
 {
-    "descriptors": [],
+    "descriptors": [
+        "ANSIBLE",
+        "CLOUDFORMATION",
+        "KUBERNETES"
+    ],
     "label": "Optimized for security",
     "linters": [
         "ANSIBLE_ANSIBLE_LINT",
         "BASH_EXEC",
         "BASH_SHELLCHECK",
         "CLOUDFORMATION_CFN_LINT",
-        "DOCKERFILE_HADOLINT",
         "KUBERNETES_KUBEVAL",
         "KUBERNETES_KUBECONFORM",
         "PYTHON_BANDIT",
@@ -23,5 +26,37 @@
         "TERRAFORM_TERRAGRUNT",
         "TERRAFORM_CHECKOV",
         "TERRAFORM_KICS"
-    ]
+    ],
+    "strict": true,
+    "supported_platforms": {
+        "linux/amd64": {
+            "descriptors": [
+                "ANSIBLE",
+                "CLOUDFORMATION",
+                "KUBERNETES"
+            ],
+            "linters": [
+                "ANSIBLE_ANSIBLE_LINT",
+                "BASH_EXEC",
+                "BASH_SHELLCHECK",
+                "CLOUDFORMATION_CFN_LINT",
+                "KUBERNETES_KUBEVAL",
+                "KUBERNETES_KUBECONFORM",
+                "PYTHON_BANDIT",
+                "REPOSITORY_CHECKOV",
+                "REPOSITORY_DEVSKIM",
+                "REPOSITORY_DUSTILOCK",
+                "REPOSITORY_GITLEAKS",
+                "REPOSITORY_SECRETLINT",
+                "REPOSITORY_SEMGREP",
+                "REPOSITORY_SYFT",
+                "REPOSITORY_TRIVY",
+                "TERRAFORM_TFLINT",
+                "TERRAFORM_TERRASCAN",
+                "TERRAFORM_TERRAGRUNT",
+                "TERRAFORM_CHECKOV",
+                "TERRAFORM_KICS"
+            ]
+        }
+    }
 }

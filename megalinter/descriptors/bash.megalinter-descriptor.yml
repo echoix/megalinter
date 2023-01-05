@@ -8,6 +8,8 @@ file_extensions:
   - ".bash"
   - ".dash"
   - ".ksh"
+supported_platforms:
+
 install:
   apk:
     - bash

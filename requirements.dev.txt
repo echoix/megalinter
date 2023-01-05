@@ -23,3 +23,17 @@ beautifulsoup4
 giturlparse
 json-schema-for-humans
 # flask-restful
+types-PyYAML
+types-requests
+types-Markdown
+types-urllib3
+types-toml
+types-simplejson
+types-setuptools
+types-pytz
+types-python-dateutil
+types-chardet
+types-jsonschema
+setuptools
+click
+Markdown

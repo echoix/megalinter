@@ -1,13 +1,24 @@
 {
     "descriptors": [
-        "BASH"
+        "hello",
+        "hello",
+        "world",
+        "BASH",
+        "COPYPASTE",
+        "DOCKERFILE",
+        "ENV",
+        "GROOVY",
+        "JSON",
+        "MAKEFILE",
+        "REPOSITORY",
+        "XML",
+        "YAML"
     ],
-    "label": "Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas,XML",
+    "label": "Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas, XML)",
     "linters": [
         "BASH_SHELLCHECK",
         "BASH_SHFMT",
         "COPYPASTE_JSCPD",
-        "DOCKERFILE_HADOLINT",
         "ENV_DOTENV_LINTER",
         "GROOVY_NPM_GROOVY_LINT",
         "JSON_JSONLINT",
@@ -24,5 +35,42 @@
         "YAML_PRETTIER",
         "YAML_YAMLLINT",
         "YAML_V8R"
-    ]
+    ],
+    "supported_platforms": {
+        "linux/amd64": {
+            "descriptors": [
+                "BASH",
+                "COPYPASTE",
+                "DOCKERFILE",
+                "ENV",
+                "GROOVY",
+                "JSON",
+                "MAKEFILE",
+                "REPOSITORY",
+                "XML",
+                "YAML"
+            ],
+            "linters": [
+                "BASH_SHELLCHECK",
+                "BASH_SHFMT",
+                "COPYPASTE_JSCPD",
+                "ENV_DOTENV_LINTER",
+                "GROOVY_NPM_GROOVY_LINT",
+                "JSON_JSONLINT",
+                "JSON_ESLINT_PLUGIN_JSONC",
+                "JSON_V8R",
+                "JSON_PRETTIER",
+                "MAKEFILE_CHECKMAKE",
+                "REPOSITORY_GIT_DIFF",
+                "REPOSITORY_GITLEAKS",
+                "REPOSITORY_GOODCHECK",
+                "REPOSITORY_SECRETLINT",
+                "REPOSITORY_TRIVY",
+                "XML_XMLLINT",
+                "YAML_PRETTIER",
+                "YAML_YAMLLINT",
+                "YAML_V8R"
+            ]
+        }
+    }
 }

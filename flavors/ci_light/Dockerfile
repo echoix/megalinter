@@ -1,4 +1,4 @@
-# MEGA-LINTER FLAVOR [ci_light]: Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas,XML
+# MEGA-LINTER FLAVOR [ci_light]: Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas, XML)
 ###########################################
 ###########################################
 ## Dockerfile to run MegaLinter ##
@@ -12,7 +12,6 @@
 #############################################################################################
 #FROM__START
 FROM mvdan/shfmt:latest-alpine as shfmt
-FROM hadolint/hadolint:v2.10.0-alpine as hadolint
 FROM zricethezav/gitleaks:v8.11.2 as gitleaks
 #FROM__END
 
@@ -135,19 +134,21 @@ RUN echo 'gem: --no-document' >> ~/.gemrc && \
 #############################################################################################
 #OTHER__START
 # shellcheck installation
-RUN ML_THIRD_PARTY_DIR="/third-party/shellcheck" \
-    && mkdir -p ${ML_THIRD_PARTY_DIR} \
-    && wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz" | tar -xJv --directory ${ML_THIRD_PARTY_DIR} \
-    && mv "${ML_THIRD_PARTY_DIR}/shellcheck-stable/shellcheck" /usr/bin/ \
-    && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete \
-    && shellcheck --version
+RUN case ${TARGETPLATFORM} in \
+      "linux/amd64")  SHELLCHECK_ARCH=x86_64   ;; \
+      "linux/arm64")  SHELLCHECK_ARCH=aarch64  ;; \
+      "linux/arm/v6") SHELLCHECK_ARCH=armv6hf  ;; \
+    esac \
+  &&  ML_THIRD_PARTY_DIR="/third-party/shellcheck" \
+  && mkdir -p ${ML_THIRD_PARTY_DIR} \
+  && wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.${SHELLCHECK_ARCH}.tar.xz" | tar -xJv --directory ${ML_THIRD_PARTY_DIR} \
+  && mv "${ML_THIRD_PARTY_DIR}/shellcheck-stable/shellcheck" /usr/bin/ \
+  && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete \
+  && shellcheck --version
 
 
 # shfmt installation
 COPY --from=shfmt /bin/shfmt /usr/bin/
-
-# hadolint installation
-COPY --from=hadolint /bin/hadolint /usr/bin/hadolint
 
 # dotenv-linter installation
 RUN wget -q -O - https://raw.githubusercontent.com/dotenv-linter/dotenv-linter/master/install.sh | sh -s

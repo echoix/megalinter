@@ -2,6 +2,12 @@ descriptor_id: EDITORCONFIG
 descriptor_type: tooling_format
 descriptor_flavors:
   - all_flavors # Applicable to CI in any language project
+supported_platforms:
+  install_override:
+    - platform: linux/riscv64
+      install:
+        pip:
+          - yaml
 file_extensions:
   - "*"
 active_only_if_file_found:

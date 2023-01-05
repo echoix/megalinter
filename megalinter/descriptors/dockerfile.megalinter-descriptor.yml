@@ -3,6 +3,9 @@ descriptor_type: tooling_format
 descriptor_flavors:
   - all_flavors # Applicable to CI in any language project
   - ci_light
+supported_platforms:
+  platform:
+
 file_names_regex:
   - "Dockerfile"
 test_folder: docker
@@ -34,7 +37,7 @@ linters:
     downgraded_version: true
     supported_platforms:
       platform:
-        - linux/amd64
+        #        - linux/amd64
         - linux/arm64
     install:
       dockerfile:

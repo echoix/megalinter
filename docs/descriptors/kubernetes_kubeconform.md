@@ -124,13 +124,20 @@ Usage: kubeconform [OPTION]... [FILE OR FOLDER]...
 
 - Dockerfile commands :
 ```dockerfile
-RUN ML_THIRD_PARTY_DIR="/third-party/kubeconform" \
-    && KUBECONFORM_VERSION=v0.4.12 \
-    && mkdir -p ${ML_THIRD_PARTY_DIR} \
-    && wget -P ${ML_THIRD_PARTY_DIR} -q https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-linux-amd64.tar.gz \
-    && tar xf ${ML_THIRD_PARTY_DIR}/kubeconform-linux-amd64.tar.gz --directory ${ML_THIRD_PARTY_DIR} \
-    && mv ${ML_THIRD_PARTY_DIR}/kubeconform /usr/local/bin \
-    && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete
+RUN case ${TARGETPLATFORM} in \
+      "linux/amd64")   KUBECONFORM_ARCH=linux-amd64   ;; \
+      "linux/arm64")   KUBECONFORM_ARCH=linux-arm64   ;; \
+      "linux/arm/v6")  KUBECONFORM_ARCH=linux-armv6   ;; \
+      "linux/386")     KUBECONFORM_ARCH=linux-386     ;; \
+      "windows/amd64") KUBECONFORM_ARCH=windows-amd64 ;; \
+    esac \
+  && ML_THIRD_PARTY_DIR="/third-party/kubeconform" \
+  && KUBECONFORM_VERSION=v0.4.12 \
+  && mkdir -p ${ML_THIRD_PARTY_DIR} \
+  && wget -P ${ML_THIRD_PARTY_DIR} -q https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-${KUBECONFORM_ARCH}.tar.gz \
+  && tar xf ${ML_THIRD_PARTY_DIR}/kubeconform-${KUBECONFORM_ARCH}.tar.gz --directory ${ML_THIRD_PARTY_DIR} \
+  && mv ${ML_THIRD_PARTY_DIR}/kubeconform /usr/local/bin \
+  && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete
 
 ```
 

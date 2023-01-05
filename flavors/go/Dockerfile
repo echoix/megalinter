@@ -12,7 +12,6 @@
 #############################################################################################
 #FROM__START
 FROM mvdan/shfmt:latest-alpine as shfmt
-FROM hadolint/hadolint:v2.10.0-alpine as hadolint
 FROM mstruebing/editorconfig-checker:2.4.0 as editorconfig-checker
 FROM yoheimuta/protolint:latest as protolint
 FROM zricethezav/gitleaks:v8.11.2 as gitleaks
@@ -167,19 +166,21 @@ RUN printf '#!/bin/bash \n\nif [[ -x "$1" ]]; then exit 0; else echo "Error: Fil
 
 
 # shellcheck installation
-RUN ML_THIRD_PARTY_DIR="/third-party/shellcheck" \
-    && mkdir -p ${ML_THIRD_PARTY_DIR} \
-    && wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz" | tar -xJv --directory ${ML_THIRD_PARTY_DIR} \
-    && mv "${ML_THIRD_PARTY_DIR}/shellcheck-stable/shellcheck" /usr/bin/ \
-    && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete \
-    && shellcheck --version
+RUN case ${TARGETPLATFORM} in \
+      "linux/amd64")  SHELLCHECK_ARCH=x86_64   ;; \
+      "linux/arm64")  SHELLCHECK_ARCH=aarch64  ;; \
+      "linux/arm/v6") SHELLCHECK_ARCH=armv6hf  ;; \
+    esac \
+  &&  ML_THIRD_PARTY_DIR="/third-party/shellcheck" \
+  && mkdir -p ${ML_THIRD_PARTY_DIR} \
+  && wget -qO- "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.${SHELLCHECK_ARCH}.tar.xz" | tar -xJv --directory ${ML_THIRD_PARTY_DIR} \
+  && mv "${ML_THIRD_PARTY_DIR}/shellcheck-stable/shellcheck" /usr/bin/ \
+  && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete \
+  && shellcheck --version
 
 
 # shfmt installation
 COPY --from=shfmt /bin/shfmt /usr/bin/
-
-# hadolint installation
-COPY --from=hadolint /bin/hadolint /usr/bin/hadolint
 
 # editorconfig-checker installation
 COPY --from=editorconfig-checker /usr/bin/ec /usr/bin/editorconfig-checker
@@ -202,22 +203,34 @@ RUN curl --retry 5 --retry-delay 5 -sSLO https://github.com/pinterest/ktlint/rel
 
 
 # kubeval installation
-RUN ML_THIRD_PARTY_DIR="/third-party/kubeval" \
-    && mkdir -p ${ML_THIRD_PARTY_DIR} \
-    && wget -P ${ML_THIRD_PARTY_DIR} -q https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz \
-    && tar xf ${ML_THIRD_PARTY_DIR}/kubeval-linux-amd64.tar.gz --directory ${ML_THIRD_PARTY_DIR} \
-    && mv ${ML_THIRD_PARTY_DIR}/kubeval /usr/local/bin \
-    && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete
+RUN case ${TARGETPLATFORM} in \
+      "linux/amd64")   KUBEVAL_ARCH=linux-amd64   ;; \
+      "linux/386")     KUBEVAL_ARCH=linux-386     ;; \
+      "windows/amd64") KUBEVAL_ARCH=windows-amd64 ;; \
+    esac \
+  && ML_THIRD_PARTY_DIR="/third-party/kubeval" \
+  && mkdir -p ${ML_THIRD_PARTY_DIR} \
+  && wget -P ${ML_THIRD_PARTY_DIR} -q https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-${KUBEVAL_ARCH}.tar.gz \
+  && tar xf ${ML_THIRD_PARTY_DIR}/kubeval-${KUBEVAL_ARCH}.tar.gz --directory ${ML_THIRD_PARTY_DIR} \
+  && mv ${ML_THIRD_PARTY_DIR}/kubeval /usr/local/bin \
+  && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete
 
 
 # kubeconform installation
-RUN ML_THIRD_PARTY_DIR="/third-party/kubeconform" \
-    && KUBECONFORM_VERSION=v0.4.12 \
-    && mkdir -p ${ML_THIRD_PARTY_DIR} \
-    && wget -P ${ML_THIRD_PARTY_DIR} -q https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-linux-amd64.tar.gz \
-    && tar xf ${ML_THIRD_PARTY_DIR}/kubeconform-linux-amd64.tar.gz --directory ${ML_THIRD_PARTY_DIR} \
-    && mv ${ML_THIRD_PARTY_DIR}/kubeconform /usr/local/bin \
-    && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete
+RUN case ${TARGETPLATFORM} in \
+      "linux/amd64")   KUBECONFORM_ARCH=linux-amd64   ;; \
+      "linux/arm64")   KUBECONFORM_ARCH=linux-arm64   ;; \
+      "linux/arm/v6")  KUBECONFORM_ARCH=linux-armv6   ;; \
+      "linux/386")     KUBECONFORM_ARCH=linux-386     ;; \
+      "windows/amd64") KUBECONFORM_ARCH=windows-amd64 ;; \
+    esac \
+  && ML_THIRD_PARTY_DIR="/third-party/kubeconform" \
+  && KUBECONFORM_VERSION=v0.4.12 \
+  && mkdir -p ${ML_THIRD_PARTY_DIR} \
+  && wget -P ${ML_THIRD_PARTY_DIR} -q https://github.com/yannh/kubeconform/releases/download/$KUBECONFORM_VERSION/kubeconform-${KUBECONFORM_ARCH}.tar.gz \
+  && tar xf ${ML_THIRD_PARTY_DIR}/kubeconform-${KUBECONFORM_ARCH}.tar.gz --directory ${ML_THIRD_PARTY_DIR} \
+  && mv ${ML_THIRD_PARTY_DIR}/kubeconform /usr/local/bin \
+  && find ${ML_THIRD_PARTY_DIR} -type f -not -name 'LICENSE*' -delete -o -type d -empty -delete
 
 
 # protolint installation

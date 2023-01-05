@@ -81,6 +81,7 @@ def build_descriptor_linters(file, linter_init_params=None, linter_names=None):
     if linter_names is None:
         linter_names = []
     linters = []
+
     # Dynamic generation from yaml
     with open(file, "r", encoding="utf-8") as f:
         language_descriptor = yaml.load(f, Loader=yaml.FullLoader)
@@ -96,13 +97,40 @@ def build_descriptor_linters(file, linter_init_params=None, linter_names=None):
                 common_attributes["descriptor_supported_platforms"] = attr_value
 
         # Set default `supported_platforms` if it wasn't included in the descriptor-level `supported_platforms`
-        common_attributes.setdefault("descriptor_supported_platforms", dict(platform=["linux/amd64", ]))
-        common_attributes["descriptor_supported_platforms"] = common_attributes["descriptor_supported_platforms"] if common_attributes["descriptor_supported_platforms"] is not None else dict(platform=["linux/amd64", ])
+        common_attributes.setdefault(
+            "descriptor_supported_platforms",
+            dict(
+                platform=[
+                    "linux/amd64",
+                ]
+            ),
+        )
+        common_attributes["descriptor_supported_platforms"] = (
+            common_attributes["descriptor_supported_platforms"]
+            if common_attributes["descriptor_supported_platforms"] is not None
+            else dict(
+                platform=[
+                    "linux/amd64",
+                ]
+            )
+        )
 
         # Set the default platform at descriptor-level if `descriptor_supported_platforms` exists,
         # but `platform` either doesn't exist or isn't set to at least the default platform.
-        common_attributes["descriptor_supported_platforms"].setdefault("platform", ["linux/amd64", ])
-        common_attributes["descriptor_supported_platforms"]["platform"] = common_attributes["descriptor_supported_platforms"]["platform"] if common_attributes["descriptor_supported_platforms"]["platform"] is not None else ["linux/amd64", ]
+        common_attributes["descriptor_supported_platforms"].setdefault(
+            "platform",
+            [
+                "linux/amd64",
+            ],
+        )
+        common_attributes["descriptor_supported_platforms"]["platform"] = (
+            common_attributes["descriptor_supported_platforms"]["platform"]
+            if common_attributes["descriptor_supported_platforms"]["platform"]
+            is not None
+            else [
+                "linux/amd64",
+            ]
+        )
 
         # Browse linters defined for language
         for linter_descriptor in language_descriptor.get("linters", []):
@@ -124,11 +152,23 @@ def build_descriptor_linters(file, linter_init_params=None, linter_names=None):
                 linter_class = getattr(linter_module, linter_class_file_name)
 
             # Set default `supported_platforms` at linter-level if not included
-            linter_descriptor.setdefault("supported_platforms", dict(platform=["linux/amd64", ]))
+            linter_descriptor.setdefault(
+                "supported_platforms",
+                dict(
+                    platform=[
+                        "linux/amd64",
+                    ]
+                ),
+            )
 
             # Set the default platform if `supported_platforms` exists,
             # but `platform` either doesn't exist or isn't set to at least the default platform.
-            linter_descriptor["supported_platforms"].setdefault("platform", ["linux/amd64", ])
+            linter_descriptor["supported_platforms"].setdefault(
+                "platform",
+                [
+                    "linux/amd64",
+                ],
+            )
 
             # Create a Linter class instance by linter
             instance_attributes = {**common_attributes, **linter_descriptor}

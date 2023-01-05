@@ -6,6 +6,12 @@ files_sub_directory: .github/workflows
 file_extensions:
   - ".yml"
   - ".yaml"
+supported_platforms:
+  platform:
+    - linux/amd64
+    - linux/386
+    - linux/riscv64
+    - linux/edyyy
 install:
   apk:
     - go

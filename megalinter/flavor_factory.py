@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import sys
+from typing import Any, Dict, List, Tuple
 
 from megalinter import config
 from megalinter.constants import ML_REPO
@@ -38,13 +39,23 @@ def list_flavor_linters(flavor_id):
     return flavor_definition["linters"]
 
 
-def list_megalinter_flavors() -> dict[str, dict[str, str]]:
-    flavors = {
+def list_megalinter_flavors() -> dict[
+    str, dict[str, str | bool | dict[str, None | dict[str, list[str]]]]
+]:
+    # qqqqqqq dict[str, dict[str, bool | dict[str, dict[str, list[str]]] | str]]:
+    # aaa: dict[str, dict[str, list[str]]] = {"linux/amd64": {"descriptors":["ANS", "BUU"], "linters":["ANS2", "BUU2"]}}
+    # bbb= {"linux/amd64": {"descriptors":["ANS", "BUU"], "linters":["ANS2", "BUU2"]}}
+    # secu = dict(label="Optimized for security", strict=True)
+    # secu2 = {'label': "Optimized for security", 'strict': True}
+    # secu3: dict[str, bool | dict[str, dict[str, list[str]]] | str] = {'label': "Optimized for security", 'strict': True, "supported_platforms": {"linux/amd64": {"descriptors":["ANS", "BUU"], "linters":["ANS2", "BUU2"]}}}
+    # flavors: dict[str, dict[str, str| bool | dict[str, None | dict[str, list[str]]] ]]= {
+    flavors: dict[str, dict[str, str | bool | dict[str, None | dict[str, list[str]]]]] = {
         "all": {
             "label": "MegaLinter for any type of project",
-            "supported_platforms": {
-                "linux/amd64": {}
-            }
+            "supported_platforms": {"linux/amd64": {}},
+            "supported_platforms3": {},
+            "supported_platforms4": None,
+            # "supported_platforms": {"linux/amd64": {}},
         },
         "ci_light": {
             "label": "Optimized for CI items (Dockerfile, Jenkinsfile, JSON/YAML schemas, XML)"
@@ -59,10 +70,7 @@ def list_megalinter_flavors() -> dict[str, dict[str, str]]:
         "php": {"label": "Optimized for PHP based projects"},
         "python": {
             "label": "Optimized for PYTHON based projects",
-            "supported_platforms": {
-                "linux/amd64": {},
-                "linux/arm64": {}
-            }
+            "supported_platforms": {"linux/amd64": {}, "linux/arm64": {}},
         },
         "ruby": {"label": "Optimized for RUBY based projects"},
         "rust": {"label": "Optimized for RUST based projects"},
