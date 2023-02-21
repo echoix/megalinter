@@ -81,7 +81,7 @@ jobs:
         # 0 is success (no difference), non-zero (like 1) is failure (differences)
         continue-on-error: true
       - name: Commit changes to the PR branch
-        if: steps.check-changes.outputs.outcome == "failure"
+        if: steps.check-changes.outputs.outcome == 'failure'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -97,7 +97,7 @@ jobs:
           issue-number: ${{ github.event.inputs.issue-number }}
           reaction-type: hooray
       - name: Create final comment updated files
-        if: steps.check-changes.outputs.outcome == "failure"
+        if: steps.check-changes.outputs.outcome == 'failure'
         uses: peter-evans/create-or-update-comment@v2
         with:
           ## Use token if we want to use a PAT instead of GITHUB_TOKEN, GITHUB_TOKEN acts as github-actions[bot]
@@ -108,7 +108,7 @@ jobs:
           body: |
             > Build command workflow completed updating files.
       - name: Create final comment no updated files
-        if: steps.check-changes.outputs.outcome == "success"
+        if: steps.check-changes.outputs.outcome == 'success'
         uses: peter-evans/create-or-update-comment@v2
         with:
           ## Use token if we want to use a PAT instead of GITHUB_TOKEN, GITHUB_TOKEN acts as github-actions[bot]
