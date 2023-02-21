@@ -73,6 +73,7 @@ jobs:
             > Running script `./build.sh`
       - name: Run build script
         run: ./build.sh
+      - run: git status
       - name: Check if changes were made
         id: check-changes
         run: git diff --exit-code
