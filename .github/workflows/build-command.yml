@@ -83,7 +83,7 @@ jobs:
         # 0 is success (no difference), non-zero (like 1) is failure (differences)
         continue-on-error: true
       - name: Commit changes to the PR branch
-        if: steps.check-changes.outputs.outcome == 'failure'
+        if: ${{ failure() && steps.check-changes.outputs == 'failure' }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
