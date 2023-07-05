@@ -11,9 +11,9 @@ runs:
     - run: sudo apt-get update && sudo apt-get install -y pigz
       shell: bash
     - uses: docker://oxsecurity/megalinter-python:v7
-      args:
-        - "-v"
-        - "/var/run/docker.sock:/var/run/docker.sock:rw"
+      #args:
+      #  - "-v"
+      #  - "/var/run/docker.sock:/var/run/docker.sock:rw"
 
     #- using: "docker"
     #  image: "docker://oxsecurity/megalinter-python:v7"
