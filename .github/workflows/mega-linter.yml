@@ -33,10 +33,10 @@ jobs:
     environment:
       name: dev
     steps:
-      - name: Install pigz tool
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pigz
+      #- name: Install pigz tool
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get install -y pigz
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
@@ -48,7 +48,8 @@ jobs:
         id: ml
         # You can override MegaLinter flavor used to have faster performances
         # More info at https://megalinter.io/flavors/
-        uses: oxsecurity/megalinter/flavors/python@beta
+        #uses: oxsecurity/megalinter/flavors/python@beta
+        uses: ./flavors/python@beta
         env:
           # All available variables are described in documentation
           # https://megalinter.io/configuration/#shared-variables
