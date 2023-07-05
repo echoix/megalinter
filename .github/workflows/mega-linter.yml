@@ -49,7 +49,8 @@ jobs:
         # You can override MegaLinter flavor used to have faster performances
         # More info at https://megalinter.io/flavors/
         #uses: oxsecurity/megalinter/flavors/python@beta
-        uses: ./flavors/python
+        #uses: ./flavors/python
+        uses: echoix/megalinter/flavors/python@dev/pull-pigz
         env:
           # All available variables are described in documentation
           # https://megalinter.io/configuration/#shared-variables
