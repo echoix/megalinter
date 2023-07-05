@@ -8,12 +8,12 @@ outputs:
 runs:
   using: "composite"
   steps:
-   - run: sudo apt-get update && sudo apt-get install -y pigz
-   - using: "docker"
-     image: "docker://oxsecurity/megalinter-python:v7"
-     args:
-      - "-v"
-      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+    - run: sudo apt-get update && sudo apt-get install -y pigz
+    - using: "docker"
+      image: "docker://oxsecurity/megalinter-python:v7"
+      args:
+        - "-v"
+        - "/var/run/docker.sock:/var/run/docker.sock:rw"
 branding:
   icon: "check"
   color: "green"
