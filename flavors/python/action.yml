@@ -9,6 +9,7 @@ runs:
   using: "composite"
   steps:
     - run: sudo apt-get update && sudo apt-get install -y pigz
+      shell: bash
     - using: "docker"
       image: "docker://oxsecurity/megalinter-python:v7"
       args:
