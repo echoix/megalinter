@@ -26,7 +26,7 @@ on:
         required: false
   repository_dispatch:
     types: [help-command]
-  permissions: read-all
+permissions: read-all
 jobs:
   help:
     runs-on: ubuntu-latest
