@@ -42,7 +42,8 @@ jobs:
           GET_PR_OUTPUTS: ${{ toJson(steps.get-pr.outputs) }}
         run: echo "$GET_PR_OUTPUTS"
       - name: Slash Command Dispatch PR
-        uses: peter-evans/slash-command-dispatch@365aa01f3f77ed1a78e1527ef7db9d9c7ee59104 # main on 2023-10-21
+        #uses: peter-evans/slash-command-dispatch@365aa01f3f77ed1a78e1527ef7db9d9c7ee59104 # main on 2023-10-21
+        uses: peter-evans/slash-command-dispatch@v3
         id: scd
         if: success()
         with:
