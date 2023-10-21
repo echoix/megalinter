@@ -26,10 +26,12 @@ on:
         required: false
   repository_dispatch:
     types: [help-command]
+  permissions: read-all
 jobs:
   help:
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      issues: write
     steps:
       - name: Update comment
         uses: peter-evans/create-or-update-comment@v3
