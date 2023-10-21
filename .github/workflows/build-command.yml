@@ -26,6 +26,7 @@ on:
         required: false
   repository_dispatch:
     types: [build-command]
+permissions: read-all
 jobs:
   build-sh:
     runs-on: ubuntu-latest
@@ -33,7 +34,7 @@ jobs:
       # Give the default GITHUB_TOKEN write permission to commit and push, comment issues & post new PR
       # Remove the ones you do not need
       contents: write
-      issues: write
+      # issues: write
       pull-requests: write
     steps:
       - name: Create URL to the run output
@@ -70,7 +71,7 @@ jobs:
           repository: ${{ github.event.inputs.checkout-repository }}
           ref: ${{ github.event.inputs.checkout-ref }}
       - name: Setup Python
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4.7.1
         with:
           # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
           python-version-file: '.python-version' # Read python version from a file .python-version
@@ -103,7 +104,7 @@ jobs:
           repository: ${{ github.event.inputs.repository }}
           comment-id: ${{ github.event.inputs.comment-id }}
           issue-number: ${{ github.event.inputs.issue-number }}
-          reaction-type: hooray
+          reactions: hooray
       - name: Create final comment updated files
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: peter-evans/create-or-update-comment@v3
