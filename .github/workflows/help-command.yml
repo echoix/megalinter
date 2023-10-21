@@ -13,11 +13,17 @@ on:
         description: 'The comment-id of the slash command'
         required: true
       issue-number:
-       description: 'The issue number in which the slash command was made'
-       required: true
+        description: 'The issue number in which the slash command was made'
+        required: true
       actor:
-       description: 'The user who executed the slash command'
-       required: true
+        description: 'The user who executed the slash command'
+        required: true
+      checkout-ref:
+        description: "The reference to pass to 'ref' to checkout action"
+        required: false
+      checkout-repository:
+        description: "The repository to pass to 'repository' to tcheckout action"
+        required: false
   repository_dispatch:
     types: [help-command]
 jobs:
