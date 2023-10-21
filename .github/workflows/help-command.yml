@@ -13,17 +13,26 @@ on:
         description: 'The comment-id of the slash command'
         required: true
       issue-number:
-       description: 'The issue number in which the slash command was made'
-       required: true
+        description: 'The issue number in which the slash command was made'
+        required: true
       actor:
-       description: 'The user who executed the slash command'
-       required: true
+        description: 'The user who executed the slash command'
+        required: true
+      checkout-ref:
+        description: "The reference to pass to 'ref' to checkout action"
+        required: false
+      checkout-repository:
+        description: "The repository to pass to 'repository' to tcheckout action"
+        required: false
   repository_dispatch:
     types: [help-command]
+permissions: read-all
 jobs:
   help:
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      #issues: write
+      pull-requests: write
     steps:
       - name: Update comment
         uses: peter-evans/create-or-update-comment@v3
@@ -42,4 +51,4 @@ jobs:
             > /build | Updates the Dockerfile, documentation, and other files from the yml descriptors
             > /build [ref=...]| Same as /build, but executes workflow in any branch using the ref named argument. The reference can be a branch, tag, or a commit SHA. This can be useful to test workflows in PR branches before merging.
             > /help | Returns this help message
-          reaction-type: hooray
+          reactions: hooray
