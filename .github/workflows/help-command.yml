@@ -31,7 +31,8 @@ jobs:
   help:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      #issues: write
+      pull-requests: write
     steps:
       - name: Update comment
         uses: peter-evans/create-or-update-comment@v3
