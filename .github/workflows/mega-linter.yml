@@ -51,7 +51,10 @@ jobs:
       name: dev # ml workflow addition
 
     steps:
-
+      - name: Dump the event payload context
+        env:
+          EVENT_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$EVENT_CONTEXT"
       # Git Checkout
       - name: Checkout Code
         uses: actions/checkout@v4
