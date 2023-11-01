@@ -15,6 +15,7 @@ if type python3 >/dev/null 2>/dev/null; then
 else
   python -m mkdocs build
 fi
+# echoix flag
 
 # Prettify `search_index.json` after `mkdocs`
 # `mkdocs` removed its own prettify few years ago: https://github.com/mkdocs/mkdocs/pull/1128
