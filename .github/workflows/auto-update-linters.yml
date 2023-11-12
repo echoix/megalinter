@@ -35,22 +35,22 @@ jobs:
     environment:
       name: auto-update
     # Prevent duplicate run from happening when a forked push is committed
-    #if: ((github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository) && github.repository == 'oxsecurity/megalinter') || 
+    if: ((github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository) && github.repository == 'oxsecurity/megalinter') || github.event_name == 'workflow_dispatch'
     # Set max build time for the job
     timeout-minutes: 60
     ##################
     # Load all steps #
     ##################
     steps:
-      - name: Dump github context
-        env: 
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      # - name: Dump github context
+      #   env: 
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"
 
-      - name: Dump the event payload context
-        env:
-          EVENT_CONTEXT: ${{ toJson(github.event) }}
-        run: echo "$EVENT_CONTEXT"
+      # - name: Dump the event payload context
+      #   env:
+      #     EVENT_CONTEXT: ${{ toJson(github.event) }}
+      #   run: echo "$EVENT_CONTEXT"
       ##########################
       # Checkout the code base #
       ##########################
