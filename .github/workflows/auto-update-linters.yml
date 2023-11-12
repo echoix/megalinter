@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-      - auto-update
       - fixes/docgen
   # Automatically run every day at 21:49 UTC, before a start of hour peak
   schedule:
@@ -48,6 +47,8 @@ jobs:
       ##########################
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: auto-update
 
       #######################
       # Docker Buildx setup #
@@ -125,6 +126,7 @@ jobs:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN  }}
           author: "Nicolas Vuillamy <nicolas.vuillamy@gmail.com>"
           commit-message: "[automation] Auto-update linters version, help and documentation"
+          branch: "auto-update"
           delete-branch: true
           title: "[automation] Auto-update linters version, help and documentation"
           body: "[automation] Auto-update linters version, help and documentation"
