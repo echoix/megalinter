@@ -32,33 +32,16 @@ concurrency:
 
 jobs:
 
-  #prepare:
-   # name: Prepare matrix
-   # runs-on: ubuntu-latest
-   # outputs:
-   #   tag: ${{ steps.image_tag.outputs.tag }}
-   # steps:
-
-   # - name: Build image tag name
-   #   id: image_tag
-   #   run: |
-   #     BRANCH_NAME="${GITHUB_REF##*/}"
-   #     TAG="test-${{ github.actor }}-${BRANCH_NAME}"
-   #     echo "Tag name: ${TAG}"
-   #     echo "tag=${TAG}" >>"$GITHUB_OUTPUT"
-
   build:
     # Name the Job
     name: DEV/Linters
-    #needs: prepare
     # Set the agent to run on
-    runs-on: ubuntu-latest #${{ matrix.os }}
+    runs-on: ubuntu-latest
     permissions: read-all
     strategy:
       fail-fast: false
       max-parallel: 14
       matrix:
-        #os: [ubuntu-latest]
         # linters-start
         linter:
           [
@@ -200,17 +183,6 @@ jobs:
         with:
           comment_on_pr: false
 
-      - name: Dump github context
-        env: 
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
-      - name: Dump runner context
-        env: 
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-
-      
       - name: Checkout Code
         uses: actions/checkout@v4
         
@@ -228,9 +200,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      #- name: Get current date
-      #  run: echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> ${GITHUB_ENV}
 
       - name: Build Image
         uses: docker/build-push-action@v5
@@ -266,26 +235,6 @@ jobs:
       ##############################################
       # Check Docker image security with Trivy #
       ##############################################
-      - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'docker.io/${{ fromJson(steps.meta.outputs.json).tags[0] }}'
-          #scan-type: 'config'
-          hide-progress: false
-          format: 'sarif'
-          scanners: vuln
-          output: 'trivy-results.sarif'
-          #exit-code: '1'
-          ignore-unfixed: true
-          timeout: 10m0s
-          severity: 'CRITICAL,HIGH'
-          
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
-
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -297,6 +246,4 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
           timeout: 10m0s
-          github-pat: ${{ secrets.GITHUB_TOKEN }}
-          
       
