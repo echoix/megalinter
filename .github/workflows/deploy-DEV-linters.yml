@@ -194,6 +194,10 @@ jobs:
     # Load all steps #
     ##################
     steps:
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1
+        with:
+          comment_on_pr: false
 
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -251,7 +255,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/ '
+          image-ref: 'docker.io/${{ fromJson(steps.meta.outputs.json).tags[0]}'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
