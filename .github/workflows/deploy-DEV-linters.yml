@@ -50,7 +50,7 @@ jobs:
   build:
     # Name the Job
     name: Deploy Docker Image - DEV - Linters
-    needs: prepare
+    #needs: prepare
     # Set the agent to run on
     runs-on: ubuntu-latest #${{ matrix.os }}
     permissions: read-all
@@ -204,10 +204,6 @@ jobs:
         with:
           images: |
             oxsecurity/megalinter-only-${{ matrix.linter }}
-      
-      - run: echo $META_OUTPUTS
-        env:
-          META_OUTPUTS: ${{ toJson(steps.meta.outputs) }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -215,10 +211,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Get current date
-        run: echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> ${GITHUB_ENV}
-        
-      
+      #- name: Get current date
+      #  run: echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> ${GITHUB_ENV}
+
       - name: Build Image
         uses: docker/build-push-action@v5
         with:
@@ -226,9 +221,9 @@ jobs:
           file: linters/${{ matrix.linter }}/Dockerfile
           platforms: linux/amd64
           build-args: |
-            BUILD_DATE=${{ env.BUILD_DATE }}
-            BUILD_REVISION=${{ github.sha }}
-            BUILD_VERSION=${{ needs.prepare.outputs.tag }}
+            BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+            BUILD_VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+            BUILD_REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
           load: true
           push: false
           secrets: |
