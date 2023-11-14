@@ -207,7 +207,7 @@ jobs:
       
       - run: echo $META_OUTPUTS
         env:
-        META_OUTPUTS: ${{ toJson(steps.meta.outputs) }}
+          META_OUTPUTS: ${{ toJson(steps.meta.outputs) }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
