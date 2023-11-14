@@ -207,7 +207,7 @@ jobs:
         id: meta
         with:
           images: |
-            oxsecurity/megalinter-only-${{ matrix.linter }}
+            ${{ github.repository }}-only-${{ matrix.linter }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
