@@ -223,7 +223,7 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        if: ${{ ( ( runner.arch != "X64" || runner.os != "Linux" ) && matrix.platform == 'linux/amd64' ) || matrix.platform != 'linux/amd64' }}
+        if: ${{ ( ( runner.arch != 'X64' || runner.os != 'Linux' ) && matrix.platform == 'linux/amd64' ) || matrix.platform != 'linux/amd64' }}
         
 
       - name: Set up Docker Buildx
