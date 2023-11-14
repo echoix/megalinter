@@ -182,6 +182,7 @@ jobs:
             "yaml_v8r",
           ]
 # linters-end
+        platform: ['linux/amd64']
     # Only run this on the main repo
     if: |
         (
@@ -222,7 +223,7 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-        if: ${{ runner.arch != "X64" || runner.os != "Linux" }}
+        if: ${{ ( ( runner.arch != "X64" || runner.os != "Linux" ) && matrix.platform == 'linux/amd64' ) || matrix.platform != 'linux/amd64' }}
         
 
       - name: Set up Docker Buildx
@@ -236,7 +237,7 @@ jobs:
         with:
           context: .
           file: linters/${{ matrix.linter }}/Dockerfile
-          platforms: linux/amd64
+          platforms: ${{ matrix.platform }}
           build-args: |
             BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             BUILD_VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
