@@ -226,8 +226,8 @@ jobs:
             BUILD_REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
           #load: true
           #push: false
-          load: true
-          push: false
+          #load: true
+          push: true
           secrets: |
             GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
