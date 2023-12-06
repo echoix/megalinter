@@ -222,7 +222,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
-          output: type=image
+          outputs: type=image
 
       #####################################
       # Run Linter test cases #
