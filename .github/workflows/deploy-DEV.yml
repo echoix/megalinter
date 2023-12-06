@@ -117,6 +117,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
+          outputs: type=registry,oci-mediatypes=true,compression=zstd,force-compression=true
         timeout-minutes: 90
 
       #######################################
@@ -147,6 +148,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
+          outputs: type=registry,oci-mediatypes=true,compression=zstd,force-compression=true
         timeout-minutes: 90
 
       ####################################
@@ -176,6 +178,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
+          outputs: type=registry,oci-mediatypes=true,compression=zstd,force-compression=true
 
       # Clean docker build cache
       - name: Clean docker buildx cache
