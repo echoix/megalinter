@@ -230,7 +230,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
-          output: type=registry,oci-mediatypes=true,compression=estargz,force-compression=true
+          outputs: type=registry,oci-mediatypes=true,compression=estargz,force-compression=true
 
       #####################################
       # Run Linter test cases #
