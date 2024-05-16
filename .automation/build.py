@@ -569,7 +569,7 @@ def build_dockerfile(
             env_path_command += f":/venvs/{pip_linter}/bin"
         pipenv_install_command = pipenv_install_command[:-2]  # remove last \
         pipenv_install_command += (
-            ' \\\n    && '
+            " \\\n    && "
             + r"find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete && \n"
             + "rm -rf /root/.cache\n"
             + env_path_command
