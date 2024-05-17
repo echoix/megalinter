@@ -89,8 +89,7 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
     && mkdir -p "/venvs/ansible-lint" && cd "/venvs/ansible-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir ansible-lint && deactivate && cd ./../..  \
-    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete && \ 
-rm -rf /root/.cache
+    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete && \nrm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin
 #PIPVENV__END
 
