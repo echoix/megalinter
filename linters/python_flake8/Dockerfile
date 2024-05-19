@@ -90,7 +90,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
     && mkdir -p "/venvs/flake8" && cd "/venvs/flake8" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir flake8 && deactivate && cd ./../..  \
     && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
-    && rm -rf /root/.cacheENV PATH="${PATH}":/venvs/flake8/bin
+    && rm -rf /root/.cache
+ENV PATH="${PATH}":/venvs/flake8/bin
 #PIPVENV__END
 
 ############################
