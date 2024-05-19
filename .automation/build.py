@@ -573,7 +573,7 @@ def build_dockerfile(
             " \\\n    && "
             + r"find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete"
             + " \\\n    && "
-            + "rm -rf /root/.cache"
+            + "rm -rf /root/.cache\n"
             + env_path_command
         )
     else:
