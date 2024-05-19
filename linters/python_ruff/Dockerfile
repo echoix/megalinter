@@ -89,9 +89,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
     && mkdir -p "/venvs/ruff" && cd "/venvs/ruff" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir ruff && deactivate && cd ./../..  \
-    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete && \
-rm -rf /root/.cache
-ENV PATH="${PATH}":/venvs/ruff/bin
+    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
+    && rm -rf /root/.cacheENV PATH="${PATH}":/venvs/ruff/bin
 #PIPVENV__END
 
 ############################

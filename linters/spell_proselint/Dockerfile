@@ -89,9 +89,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
     && mkdir -p "/venvs/proselint" && cd "/venvs/proselint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir proselint && deactivate && cd ./../..  \
-    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete && \
-rm -rf /root/.cache
-ENV PATH="${PATH}":/venvs/proselint/bin
+    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
+    && rm -rf /root/.cacheENV PATH="${PATH}":/venvs/proselint/bin
 #PIPVENV__END
 
 ############################
