@@ -93,7 +93,7 @@ linters:
     install:
       dockerfile:
         - |
-          # renovate: datasource=github-releases depname=pmd
+          # renovate: datasource=github-releases depName=pmd
           ARG PMD_VERSION=7.0.0
         - |
           RUN wget --quiet https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-dist-${PMD_VERSION}-bin.zip && \
