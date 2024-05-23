@@ -3,7 +3,8 @@
   "extends": [
     "config:recommended",
     "customManagers:dockerfileVersions",
-    ":maintainLockFilesWeekly"
+    ":maintainLockFilesWeekly",
+    ":separateMultipleMajorReleases"
   ],
   "customManagers": [
     // This is "customManagers:dockerfileVersions":
