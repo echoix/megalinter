@@ -136,7 +136,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ENV PATH="$JAVA_HOME/bin:${PATH}"
 
 # pmd installation
-# renovate: datasource=github-releases depName=pmd
+# renovate: datasource=github-releases depName=pmd/pmd
 ARG PMD_VERSION=7.0.0
 
 RUN wget --quiet https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-dist-${PMD_VERSION}-bin.zip && \

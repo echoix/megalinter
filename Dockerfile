@@ -573,7 +573,7 @@ RUN --mount=type=secret,id=GITHUB_TOKEN CHECKSTYLE_LATEST=$(curl -s \
 
 
 # pmd installation
-# renovate: datasource=github-releases depName=pmd
+# renovate: datasource=github-releases depName=pmd/pmd
 ARG PMD_VERSION=7.0.0
 
 RUN wget --quiet https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-dist-${PMD_VERSION}-bin.zip && \
