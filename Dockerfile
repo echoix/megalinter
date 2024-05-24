@@ -67,7 +67,6 @@ ARG BICEP_EXE='bicep'
 ARG BICEP_URI='https://github.com/Azure/bicep/releases/latest/download/bicep-linux-musl-x64'
 ARG BICEP_DIR='/usr/local/bin'
 ARG DART_VERSION='2.8.4'
-ARG PMD_VERSION=7.1.0
 ARG PSSA_VERSION='latest'
 #ARG__END
 
@@ -574,6 +573,9 @@ RUN --mount=type=secret,id=GITHUB_TOKEN CHECKSTYLE_LATEST=$(curl -s \
 
 
 # pmd installation
+# renovate: datasource=github-releases depName=pmd
+ARG PMD_VERSION=7.0.0
+
 RUN wget --quiet https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-dist-${PMD_VERSION}-bin.zip && \
     unzip pmd-dist-${PMD_VERSION}-bin.zip || echo "Error unzipping" && \
     rm pmd-dist-${PMD_VERSION}-bin.zip || echo "Error rm" && \
