@@ -5,7 +5,8 @@
     // "config:best-practices",
     "customManagers:dockerfileVersions",
     ":maintainLockFilesWeekly",
-    ":separateMultipleMajorReleases"
+    ":separateMultipleMajorReleases",
+    ":dependencyDashboardApproval"
   ],
   "customManagers": [
     // This is "customManagers:dockerfileVersions":
