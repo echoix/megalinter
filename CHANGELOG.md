@@ -19,6 +19,7 @@ Note: Can be used with `oxsecurity/megalinter@beta` in your GitHub Action mega-l
   - `API_SPECTRAL` was added as replacement for `OPENAPI_SPECTRAL` (deprecated), supporting AsyncAPI and OpenAPI by default. Uses Spectral's standard config file name `.spectral.yaml` instead of `.openapirc.yml` with a default config with rulesets for AsyncAPI and OpenAPI enabled. Fixes [#3387](https://github.com/oxsecurity/megalinter/issues/3387)
   - Disable SQL_TSQLLINT until security issues are solved. Related to <https://github.com/tsqllint/tsqllint/issues/333>
   - PHP linters (PHP_PHPCS, PHP_PHPLINT, PHP_PHPSTAN) add support to SARIF report output format with help of <https://github.com/llaville/sarif-php-sdk>
+  - `KOTLIN_KTLINT` now supports `list_of_files` mode, and has better error counting
 
 - Reporters
 
@@ -153,6 +154,24 @@ Note: Can be used with `oxsecurity/megalinter@beta` in your GitHub Action mega-l
   - [pyright](https://github.com/Microsoft/pyright) from 1.1.363 to **1.1.364** on 2024-05-22
   - [checkov](https://www.checkov.io/) from 3.2.100 to **3.2.105** on 2024-05-22
   - [cspell](https://github.com/streetsidesoftware/cspell/tree/master/packages/cspell) from 8.8.1 to **8.8.2** on 2024-05-22
+  - [ruff](https://github.com/astral-sh/ruff) from 0.4.4 to **0.4.5** on 2024-05-24
+  - [checkov](https://www.checkov.io/) from 3.2.105 to **3.2.106** on 2024-05-24
+  - [rubocop](https://rubocop.org/) from 1.63.5 to **1.64.0** on 2024-05-24
+  - [lightning-flow-scanner](https://github.com/Lightning-Flow-Scanner) from 2.24.0 to **2.26.0** on 2024-05-24
+  - [cspell](https://github.com/streetsidesoftware/cspell/tree/master/packages/cspell) from 8.8.2 to **8.8.3** on 2024-05-24
+  - [proselint](https://github.com/amperser/proselint) from 0.13.0 to **0.14.0** on 2024-05-24
+  - [sqlfluff](https://www.sqlfluff.com/) from 3.0.6 to **3.0.7** on 2024-05-24
+  - [clj-kondo](https://github.com/borkdude/clj-kondo) from 2024.05.22 to **2024.05.24** on 2024-05-25
+  - [stylelint](https://stylelint.io) from 16.5.0 to **16.6.0** on 2024-05-25
+  - [luacheck](https://luacheck.readthedocs.io) from 1.1.2 to **1.2.0** on 2024-05-25
+  - [phpstan](https://phpstan.org/) from 1.11.1 to **1.11.2** on 2024-05-25
+  - [checkov](https://www.checkov.io/) from 3.2.106 to **3.2.107** on 2024-05-25
+  - [trivy-sbom](https://aquasecurity.github.io/trivy/) from 0.51.2 to **0.51.4** on 2024-05-25
+  - [trivy](https://aquasecurity.github.io/trivy/) from 0.51.2 to **0.51.4** on 2024-05-25
+  - [tekton-lint](https://github.com/IBM/tekton-lint) from 1.0.2 to **1.1.0** on 2024-05-25
+  - [terraform-fmt](https://developer.hashicorp.com/terraform/cli/commands/fmt) from 1.8.3 to **1.8.4** on 2024-05-25
+  - [terragrunt](https://terragrunt.gruntwork.io) from 0.58.7 to **0.58.9** on 2024-05-25
+  - [markdownlint](https://github.com/DavidAnson/markdownlint) from 0.40.0 to **0.41.0** on 2024-05-26
 <!-- linter-versions-end -->
 
 ## [v7.11.1] - 2024-04-23
