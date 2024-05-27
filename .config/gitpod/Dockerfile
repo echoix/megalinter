@@ -91,15 +91,7 @@ USER gitpod
 RUN curl  -LsSf https://astral.sh/uv/install.sh | sh \
     && source $HOME/.cargo/env
 
-#########################
-#         final         #
-#########################
-# FROM ubuntu:noble
-# FROM cleanup as final
-
-# COPY --from=gitpod-user / /
-
-# USER gitpod
+# Disabled the final stage, as it ends up being longer to launch overall
 # #########################
 # #         final         #
 # #########################
