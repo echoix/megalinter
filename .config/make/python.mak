@@ -21,28 +21,53 @@ python-bootstrap-dev: ## Bootstrap python for dev env
 .PHONY: python-venv-init
 python-venv-init: ## Create venv ".venv/" if not exist
 	if [ ! -d .venv ] ; then
-		$(python_launcher) -m venv .venv
+		if ! command -v -- "uv" > /dev/null 2>&1; then
+			uv venv
+		else
+			$(python_launcher) -m venv .venv
+		fi
 	fi
+# $(python_launcher) -m venv .venv
 
 .PHONY: python-venv-upgrade
 python-venv-upgrade: ## Upgrade venv with pip, setuptools and wheel
 	source .venv/bin/activate
-	pip install --upgrade pip setuptools wheel
+	if ! command -v -- "uv" > /dev/null 2>&1; then
+		uv pip install setuptools wheel
+	else
+		pip install --upgrade pip setuptools wheel
+	fi
+# uv pip install --upgrade pip setuptools wheel
+# pip install --upgrade pip setuptools wheel
 
 .PHONY: python-venv-requirements
 python-venv-requirements: ## Install or upgrade from $(python_requirements_file)
 	source .venv/bin/activate
-	pip install --upgrade --requirement $(python_requirements_file)
+	if ! command -v -- "uv" > /dev/null 2>&1; then
+		uv pip install --upgrade --requirement $(python_requirements_file)
+	else
+		pip install --upgrade --requirement $(python_requirements_file)
+	fi
+
+# uv pip install --upgrade --requirement $(python_requirements_file)
+# pip install --upgrade --requirement $(python_requirements_file)
 
 .PHONY: python-venv-requirements-dev
 python-venv-requirements-dev: ## Install or upgrade from $(python_requirements_dev_file)
 	source .venv/bin/activate
-	pip install --upgrade --requirement $(python_requirements_dev_file)
+	if ! command -v -- "uv" > /dev/null 2>&1; then
+		uv pip install --upgrade --requirement $(python_requirements_dev_file)
+	else
+		pip install --upgrade --requirement $(python_requirements_dev_file)
+	fi
+# pip install --upgrade --requirement $(python_requirements_dev_file)
+# uv pip install --upgrade --requirement $(python_requirements_dev_file)
 
 .PHONY: python-venv-linters-install
 python-venv-linters-install: ## Install or upgrade linters
 	source .venv/bin/activate
-	pip install --upgrade flake8
+	uv pip install --upgrade flake8
+# pip install --upgrade flake8
 
 .PHONY: python-venv-purge
 python-venv-purge: ## Remove venv ".venv/" folder
@@ -56,6 +81,9 @@ python-purge-cache: ## Purge cache to avoid used cached files
 	if [ -d .venv ] ; then
 		source .venv/bin/activate
 		pip cache purge
+		if ! command -v -- "uv" > /dev/null 2>&1; then
+			uv cache clean
+		fi
 	fi
 
 .PHONY: python-version
