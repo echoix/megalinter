@@ -4,7 +4,5 @@ image:
 
 tasks:
   - init: |
-      source $HOME/.cargo/env || true
-      command -v uv
       make bootstrap
       source .venv/bin/activate
