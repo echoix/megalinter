@@ -96,7 +96,7 @@ RUN curl  -LsSf https://astral.sh/uv/install.sh | sh \
 #         final         #
 #########################
 # FROM ubuntu:noble
-FROM cleanup as final
+# FROM cleanup as final
 
 # COPY --from=gitpod-user / /
 
