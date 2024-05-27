@@ -17,11 +17,11 @@ COPY .python-version /tmp/
 RUN PYTHON_VERSION=$(cut -d '.' -f 1,2 /tmp/.python-version) \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-    bash-completion  \
+    bash-completion \
     ca-certificates \
     curl \
-    git-lfs \
     git \
+    git-lfs \
     gnupg \
     htop \
     iproute2 \
@@ -100,11 +100,11 @@ RUN curl  -LsSf https://astral.sh/uv/install.sh | sh \
 # COPY --from=gitpod-user / /
 
 # USER gitpod
-#########################
-#         final         #
-#########################
-FROM ubuntu:jammy
+# #########################
+# #         final         #
+# #########################
+# FROM ubuntu:jammy
 
-COPY --from=gitpod-user / /
+# COPY --from=gitpod-user / /
 
-USER gitpod
+# USER gitpod
