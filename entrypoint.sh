@@ -29,13 +29,21 @@ git config --global --add safe.directory /tmp/lint
 # Called by Auto-update CI job
 if [ "${UPGRADE_LINTERS_VERSION}" == "true" ]; then
   echo "[MegaLinter init] UPGRADING LINTER VERSION"
-  pip install pytest-cov pytest-timeout
+  if ! command -v -- "uv" > /dev/null 2>&1; then
+    uv pip install pytest-cov pytest-timeout
+  else
+    pip install pytest-cov pytest-timeout
+  fi
   # Run only get_linter_version test methods
   pytest -v --durations=0 -k _get_linter_version megalinter/
   # Run only get_linter_help test methods
   pytest -v --durations=0 -k _get_linter_help megalinter/
   # Reinstall mkdocs-material because of broken dependency
-  pip3 install --upgrade markdown mike mkdocs-material pymdown-extensions "mkdocs-glightbox==0.3.2" mdx_truly_sane_lists jsonschema json-schema-for-humans giturlparse webpreview github-dependents-info
+  if ! command -v -- "uv" > /dev/null 2>&1; then
+    uv pip install --upgrade markdown mike mkdocs-material pymdown-extensions "mkdocs-glightbox==0.3.2" mdx_truly_sane_lists jsonschema json-schema-for-humans giturlparse webpreview github-dependents-info
+  else
+    pip3 install --upgrade markdown mike mkdocs-material pymdown-extensions "mkdocs-glightbox==0.3.2" mdx_truly_sane_lists jsonschema json-schema-for-humans giturlparse webpreview github-dependents-info
+  fi
   cd /tmp/lint || exit 1
   chmod +x build.sh
   GITHUB_TOKEN="${GITHUB_TOKEN}" bash build.sh --doc --dependents --stats
@@ -46,6 +54,11 @@ fi
 if [ "${TEST_CASE_RUN}" == "true" ]; then
   echo "[MegaLinter init] RUNNING TEST CASES"
   pip install pytest-cov pytest-timeout pytest-xdist
+  if ! command -v -- "uv" > /dev/null 2>&1; then
+    uv pip install pytest-cov pytest-timeout pytest-xdist
+  else
+    pip install pytest-cov pytest-timeout pytest-xdist
+  fi
   if [ -z "${TEST_KEYWORDS}" ]; then
     pytest -v --timeout=300 --durations=0 --cov=megalinter --cov-report=xml --numprocesses auto --dist loadscope megalinter/
   else
