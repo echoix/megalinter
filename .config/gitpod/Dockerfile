@@ -59,10 +59,10 @@ FROM docker-installer as npm-installer
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set a variable for packages version
-ARG NPM_VERSION=9.8.0
-ARG UNGIT_VERSION=1.5.23
-ARG MEGA_LINTER_RUNNER_VERSION=7.0.0
-ARG MARKDOWN_TABLE_FORMATTER_VERSION=1.4.0
+ARG NPM_VERSION=10.8.0
+ARG UNGIT_VERSION=1.5.26
+ARG MEGA_LINTER_RUNNER_VERSION=7.11.1
+ARG MARKDOWN_TABLE_FORMATTER_VERSION=1.6.0
 
 # hadolint ignore=DL3008
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
