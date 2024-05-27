@@ -33,8 +33,10 @@ python-venv-init: ## Create venv ".venv/" if not exist
 python-venv-upgrade: ## Upgrade venv with pip, setuptools and wheel
 	source .venv/bin/activate
 	if ! command -v -- "uv" > /dev/null 2>&1; then
+		echo "In python-venv-upgrade, using uv"
 		uv pip install setuptools wheel
 	else
+		echo "In python-venv-upgrade, using pip"
 		pip install --upgrade pip setuptools wheel
 	fi
 # uv pip install --upgrade pip setuptools wheel
@@ -44,8 +46,10 @@ python-venv-upgrade: ## Upgrade venv with pip, setuptools and wheel
 python-venv-requirements: ## Install or upgrade from $(python_requirements_file)
 	source .venv/bin/activate
 	if ! command -v -- "uv" > /dev/null 2>&1; then
+		echo "In python-venv-requirements, using uv"
 		uv pip install --upgrade --requirement $(python_requirements_file)
 	else
+		echo "In python-venv-requirements, using pip"
 		pip install --upgrade --requirement $(python_requirements_file)
 	fi
 
@@ -56,8 +60,10 @@ python-venv-requirements: ## Install or upgrade from $(python_requirements_file)
 python-venv-requirements-dev: ## Install or upgrade from $(python_requirements_dev_file)
 	source .venv/bin/activate
 	if ! command -v -- "uv" > /dev/null 2>&1; then
+		echo "In python-venv-requirements-dev, using uv"
 		uv pip install --upgrade --requirement $(python_requirements_dev_file)
 	else
+		echo "In python-venv-requirements-dev, using pip"
 		pip install --upgrade --requirement $(python_requirements_dev_file)
 	fi
 # pip install --upgrade --requirement $(python_requirements_dev_file)
@@ -66,7 +72,13 @@ python-venv-requirements-dev: ## Install or upgrade from $(python_requirements_d
 .PHONY: python-venv-linters-install
 python-venv-linters-install: ## Install or upgrade linters
 	source .venv/bin/activate
-	uv pip install --upgrade flake8
+	if ! command -v -- "uv" > /dev/null 2>&1; then
+		echo "python-venv-linters-install, using uv"
+		uv pip install --upgrade flake8
+	else
+		echo "python-venv-linters-install, using pip"
+		pip install --upgrade flake8
+	fi
 # pip install --upgrade flake8
 
 .PHONY: python-venv-purge
