@@ -52,7 +52,9 @@ ARG BICEP_EXE='bicep'
 ARG BICEP_URI='https://github.com/Azure/bicep/releases/latest/download/bicep-linux-musl-x64'
 ARG BICEP_DIR='/usr/local/bin'
 ARG DETEKT_VERSION='1.23.6'
-ARG PSSA_VERSION='latest'
+# renovate: datasource=nuget depName=PSScriptAnalyzer registryUrl=https://www.powershellgallery.com/api/v2/
+ARG PSSA_VERSION='1.22.0'
+
 #ARG__END
 
 # Static args

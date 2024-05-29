@@ -12,7 +12,9 @@
 #############################################################################################
 #ARGTOP__START
 ARG EDITORCONFIG_CHECKER_VERSION=latest
-ARG TFLINT_VERSION=0.51.1
+# renovate: datasource=docker depName=ghcr.io/terraform-linters/tflint
+ARG TFLINT_VERSION=v0.51.0
+
 #ARGTOP__END
 
 #############################################################################################
@@ -45,7 +47,7 @@ FROM checkmarx/kics:alpine as kics
 FROM trufflesecurity/trufflehog:latest as trufflehog
 FROM jdkato/vale:latest as vale
 FROM lycheeverse/lychee:latest-alpine as lychee
-FROM ghcr.io/terraform-linters/tflint:v${TFLINT_VERSION} as tflint
+FROM ghcr.io/terraform-linters/tflint:${TFLINT_VERSION} as tflint
 FROM tenable/terrascan:1.18.11 as terrascan
 FROM alpine/terragrunt:latest as terragrunt
 # Next FROM line commented because already managed by another linter
@@ -68,9 +70,13 @@ ARG BICEP_EXE='bicep'
 ARG BICEP_URI='https://github.com/Azure/bicep/releases/latest/download/bicep-linux-musl-x64'
 ARG BICEP_DIR='/usr/local/bin'
 ARG DART_VERSION='2.8.4'
+# renovate: datasource=github-tags depName=pmd/pmd extractVersion=^pmd_releases/(?<version>.*)$
 ARG PMD_VERSION=7.1.0
+
 ARG DETEKT_VERSION='1.23.6'
-ARG PSSA_VERSION='latest'
+# renovate: datasource=nuget depName=PSScriptAnalyzer registryUrl=https://www.powershellgallery.com/api/v2/
+ARG PSSA_VERSION='1.22.0'
+
 #ARG__END
 
 # Static args
