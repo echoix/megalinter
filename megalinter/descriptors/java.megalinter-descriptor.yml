@@ -92,6 +92,14 @@ linters:
       - "pmd --rulesets java-pmd-ruleset.xml --dir /path/to/sources"
     install:
       dockerfile:
+        - RUN echo 1
+        - |
+          RUN echo 2 &&
+              echo "hello"
+        - |
+          # renovate: datasource=nuget depName=PowerShell/PSScriptAnalyzer registryUrl=https://www.powershellgallery.com/api/v2/
+          ARG PSSA_VERSION='1.21.0'
+        - RUN pwsh -c 'Install-Module -Name PSScriptAnalyzer -RequiredVersion ${PSSA_VERSION} -Scope AllUsers -Force'
         - |
           # renovate: datasource=github-tags depName=pmd/pmd extractVersion=^pmd_releases/(?<version>.*)$
           ARG PMD_VERSION=7.0.0
