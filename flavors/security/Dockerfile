@@ -113,11 +113,11 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install ansible-lint=='24.2.3' \
-    && uv venv --seed "/venvs/cfn-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cfn-lint \
-    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 uv pip install bandit bandit_sarif_formatter bandit[toml] \
-    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 uv pip install packaging checkov \
-    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 uv pip install semgrep  \
+    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install ansible-lint=='24.2.3' \
+    && uv venv --seed "/venvs/cfn-lint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install cfn-lint \
+    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install bandit bandit_sarif_formatter bandit[toml] \
+    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install packaging checkov \
+    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install semgrep  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin:/venvs/cfn-lint/bin:/venvs/bandit/bin:/venvs/checkov/bin:/venvs/semgrep/bin

@@ -135,15 +135,15 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install ansible-lint=='24.2.3' \
-    && uv venv --seed "/venvs/djlint" && PYTHONDONTWRITEBYTECODE=1 uv pip install djlint \
-    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 uv pip install packaging checkov \
-    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 uv pip install semgrep \
-    && uv venv --seed "/venvs/snakemake" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakemake \
-    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakefmt \
-    && uv venv --seed "/venvs/proselint" && PYTHONDONTWRITEBYTECODE=1 uv pip install proselint \
-    && uv venv --seed "/venvs/sqlfluff" && PYTHONDONTWRITEBYTECODE=1 uv pip install sqlfluff \
-    && uv venv --seed "/venvs/yamllint" && PYTHONDONTWRITEBYTECODE=1 uv pip install yamllint  \
+    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install ansible-lint=='24.2.3' \
+    && uv venv --seed "/venvs/djlint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install djlint \
+    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install packaging checkov \
+    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install semgrep \
+    && uv venv --seed "/venvs/snakemake" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install snakemake \
+    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install snakefmt \
+    && uv venv --seed "/venvs/proselint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install proselint \
+    && uv venv --seed "/venvs/sqlfluff" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install sqlfluff \
+    && uv venv --seed "/venvs/yamllint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install yamllint  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin:/venvs/djlint/bin:/venvs/checkov/bin:/venvs/semgrep/bin:/venvs/snakemake/bin:/venvs/snakefmt/bin:/venvs/proselint/bin:/venvs/sqlfluff/bin:/venvs/yamllint/bin

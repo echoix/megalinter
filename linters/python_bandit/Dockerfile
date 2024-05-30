@@ -88,7 +88,7 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 uv pip install bandit bandit_sarif_formatter bandit[toml]  \
+    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install bandit bandit_sarif_formatter bandit[toml]  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/bandit/bin

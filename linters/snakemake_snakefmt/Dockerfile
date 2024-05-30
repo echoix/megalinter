@@ -88,7 +88,7 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakefmt  \
+    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install snakefmt  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/snakefmt/bin
