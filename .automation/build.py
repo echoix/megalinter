@@ -559,21 +559,15 @@ def build_dockerfile(
     # Python packages in venv
     if len(pipvenv_packages.items()) > 0:
         pipenv_install_command = (
-            "RUN PYTHONDONTWRITEBYTECODE=1 pip3 install"
-            " --no-cache-dir --upgrade pip virtualenv \\\n"
+            "RUN PYTHONDONTWRITEBYTECODE=1 pip3 install" " --no-cache-dir uv \\\n"
         )
         env_path_command = 'ENV PATH="${PATH}"'
         for pip_linter, pip_linter_packages in pipvenv_packages.items():
             pipenv_install_command += (
-                f'    && mkdir -p "/venvs/{pip_linter}" '
-                + f'&& cd "/venvs/{pip_linter}" '
-                + "&& virtualenv . "
-                + "&& source bin/activate "
-                + "&& PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir "
+                f'    && uv venv --seed "/venvs/{pip_linter}" '
+                + f'&& PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install '
                 + (" ".join(pip_linter_packages))
-                + " "
-                + "&& deactivate "
-                + "&& cd ./../.. \\\n"
+                + " \\\n"
             )
             env_path_command += f":/venvs/{pip_linter}/bin"
         pipenv_install_command = pipenv_install_command[:-2]  # remove last \

@@ -132,16 +132,16 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 #############################################################################################
 
 #PIPVENV__START
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
-    && mkdir -p "/venvs/ansible-lint" && cd "/venvs/ansible-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir ansible-lint=='24.2.3' && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/djlint" && cd "/venvs/djlint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir djlint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/checkov" && cd "/venvs/checkov" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir packaging checkov && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/semgrep" && cd "/venvs/semgrep" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir semgrep && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/snakemake" && cd "/venvs/snakemake" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir snakemake && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/snakefmt" && cd "/venvs/snakefmt" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir snakefmt && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/proselint" && cd "/venvs/proselint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir proselint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/sqlfluff" && cd "/venvs/sqlfluff" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir sqlfluff && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/yamllint" && cd "/venvs/yamllint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir yamllint && deactivate && cd ./../..  \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
+    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/ansible-lint" uv pip install ansible-lint=='24.2.3' \
+    && uv venv --seed "/venvs/djlint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/djlint" uv pip install djlint \
+    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/checkov" uv pip install packaging checkov \
+    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/semgrep" uv pip install semgrep \
+    && uv venv --seed "/venvs/snakemake" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/snakemake" uv pip install snakemake \
+    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/snakefmt" uv pip install snakefmt \
+    && uv venv --seed "/venvs/proselint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/proselint" uv pip install proselint \
+    && uv venv --seed "/venvs/sqlfluff" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/sqlfluff" uv pip install sqlfluff \
+    && uv venv --seed "/venvs/yamllint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/yamllint" uv pip install yamllint  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin:/venvs/djlint/bin:/venvs/checkov/bin:/venvs/semgrep/bin:/venvs/snakemake/bin:/venvs/snakefmt/bin:/venvs/proselint/bin:/venvs/sqlfluff/bin:/venvs/yamllint/bin
