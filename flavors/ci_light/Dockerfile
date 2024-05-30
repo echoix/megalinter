@@ -105,8 +105,8 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 #############################################################################################
 
 #PIPVENV__START
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
-    && mkdir -p "/venvs/yamllint" && cd "/venvs/yamllint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir yamllint && deactivate && cd ./../..  \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
+    && uv venv --seed "/venvs/yamllint" && PYTHONDONTWRITEBYTECODE=1 uv pip install yamllint  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/yamllint/bin

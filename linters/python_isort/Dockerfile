@@ -87,8 +87,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 #############################################################################################
 
 #PIPVENV__START
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
-    && mkdir -p "/venvs/isort" && cd "/venvs/isort" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir isort black && deactivate && cd ./../..  \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
+    && uv venv --seed "/venvs/isort" && PYTHONDONTWRITEBYTECODE=1 uv pip install isort black  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/isort/bin

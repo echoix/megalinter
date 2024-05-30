@@ -185,29 +185,29 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 #############################################################################################
 
 #PIPVENV__START
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
-    && mkdir -p "/venvs/ansible-lint" && cd "/venvs/ansible-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir ansible-lint=='24.2.3' && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/cpplint" && cd "/venvs/cpplint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir cpplint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/cfn-lint" && cd "/venvs/cfn-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir cfn-lint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/djlint" && cd "/venvs/djlint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir djlint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/pylint" && cd "/venvs/pylint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir pylint typing-extensions && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/black" && cd "/venvs/black" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir black && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/flake8" && cd "/venvs/flake8" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir flake8 && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/isort" && cd "/venvs/isort" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir isort black && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/bandit" && cd "/venvs/bandit" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir bandit bandit_sarif_formatter bandit[toml] && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/mypy" && cd "/venvs/mypy" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir mypy && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/pyright" && cd "/venvs/pyright" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir pyright && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/ruff" && cd "/venvs/ruff" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir ruff && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/checkov" && cd "/venvs/checkov" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir packaging checkov && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/semgrep" && cd "/venvs/semgrep" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir semgrep && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/rst-lint" && cd "/venvs/rst-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir restructuredtext_lint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/rstcheck" && cd "/venvs/rstcheck" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir rstcheck[toml,sphinx] && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/rstfmt" && cd "/venvs/rstfmt" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir rstfmt && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/snakemake" && cd "/venvs/snakemake" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir snakemake && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/snakefmt" && cd "/venvs/snakefmt" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir snakefmt && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/proselint" && cd "/venvs/proselint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir proselint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/sqlfluff" && cd "/venvs/sqlfluff" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir sqlfluff && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/yamllint" && cd "/venvs/yamllint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir yamllint && deactivate && cd ./../..  \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
+    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install ansible-lint=='24.2.3' \
+    && uv venv --seed "/venvs/cpplint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cpplint \
+    && uv venv --seed "/venvs/cfn-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cfn-lint \
+    && uv venv --seed "/venvs/djlint" && PYTHONDONTWRITEBYTECODE=1 uv pip install djlint \
+    && uv venv --seed "/venvs/pylint" && PYTHONDONTWRITEBYTECODE=1 uv pip install pylint typing-extensions \
+    && uv venv --seed "/venvs/black" && PYTHONDONTWRITEBYTECODE=1 uv pip install black \
+    && uv venv --seed "/venvs/flake8" && PYTHONDONTWRITEBYTECODE=1 uv pip install flake8 \
+    && uv venv --seed "/venvs/isort" && PYTHONDONTWRITEBYTECODE=1 uv pip install isort black \
+    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 uv pip install bandit bandit_sarif_formatter bandit[toml] \
+    && uv venv --seed "/venvs/mypy" && PYTHONDONTWRITEBYTECODE=1 uv pip install mypy \
+    && uv venv --seed "/venvs/pyright" && PYTHONDONTWRITEBYTECODE=1 uv pip install pyright \
+    && uv venv --seed "/venvs/ruff" && PYTHONDONTWRITEBYTECODE=1 uv pip install ruff \
+    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 uv pip install packaging checkov \
+    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 uv pip install semgrep \
+    && uv venv --seed "/venvs/rst-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install restructuredtext_lint \
+    && uv venv --seed "/venvs/rstcheck" && PYTHONDONTWRITEBYTECODE=1 uv pip install rstcheck[toml,sphinx] \
+    && uv venv --seed "/venvs/rstfmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install rstfmt \
+    && uv venv --seed "/venvs/snakemake" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakemake \
+    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakefmt \
+    && uv venv --seed "/venvs/proselint" && PYTHONDONTWRITEBYTECODE=1 uv pip install proselint \
+    && uv venv --seed "/venvs/sqlfluff" && PYTHONDONTWRITEBYTECODE=1 uv pip install sqlfluff \
+    && uv venv --seed "/venvs/yamllint" && PYTHONDONTWRITEBYTECODE=1 uv pip install yamllint  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin:/venvs/cpplint/bin:/venvs/cfn-lint/bin:/venvs/djlint/bin:/venvs/pylint/bin:/venvs/black/bin:/venvs/flake8/bin:/venvs/isort/bin:/venvs/bandit/bin:/venvs/mypy/bin:/venvs/pyright/bin:/venvs/ruff/bin:/venvs/checkov/bin:/venvs/semgrep/bin:/venvs/rst-lint/bin:/venvs/rstcheck/bin:/venvs/rstfmt/bin:/venvs/snakemake/bin:/venvs/snakefmt/bin:/venvs/proselint/bin:/venvs/sqlfluff/bin:/venvs/yamllint/bin

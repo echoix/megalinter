@@ -99,11 +99,11 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 #############################################################################################
 
 #PIPVENV__START
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
-    && mkdir -p "/venvs/black" && cd "/venvs/black" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir black && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/isort" && cd "/venvs/isort" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir isort black && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/rstfmt" && cd "/venvs/rstfmt" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir rstfmt && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/snakefmt" && cd "/venvs/snakefmt" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir snakefmt && deactivate && cd ./../..  \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
+    && uv venv --seed "/venvs/black" && PYTHONDONTWRITEBYTECODE=1 uv pip install black \
+    && uv venv --seed "/venvs/isort" && PYTHONDONTWRITEBYTECODE=1 uv pip install isort black \
+    && uv venv --seed "/venvs/rstfmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install rstfmt \
+    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakefmt  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/black/bin:/venvs/isort/bin:/venvs/rstfmt/bin:/venvs/snakefmt/bin

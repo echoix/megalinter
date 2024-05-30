@@ -112,12 +112,12 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 #############################################################################################
 
 #PIPVENV__START
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir --upgrade pip virtualenv \
-    && mkdir -p "/venvs/ansible-lint" && cd "/venvs/ansible-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir ansible-lint=='24.2.3' && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/cfn-lint" && cd "/venvs/cfn-lint" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir cfn-lint && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/bandit" && cd "/venvs/bandit" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir bandit bandit_sarif_formatter bandit[toml] && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/checkov" && cd "/venvs/checkov" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir packaging checkov && deactivate && cd ./../.. \
-    && mkdir -p "/venvs/semgrep" && cd "/venvs/semgrep" && virtualenv . && source bin/activate && PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir semgrep && deactivate && cd ./../..  \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
+    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install ansible-lint=='24.2.3' \
+    && uv venv --seed "/venvs/cfn-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cfn-lint \
+    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 uv pip install bandit bandit_sarif_formatter bandit[toml] \
+    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 uv pip install packaging checkov \
+    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 uv pip install semgrep  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin:/venvs/cfn-lint/bin:/venvs/bandit/bin:/venvs/checkov/bin:/venvs/semgrep/bin
