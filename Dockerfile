@@ -196,28 +196,6 @@ RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
 		&& uv pip --help \
 		&& uv pip install --help \
     && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install ansible-lint=='24.2.3' \
-    && uv venv --seed "/venvs/cpplint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cpplint \
-    && uv venv --seed "/venvs/cfn-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cfn-lint \
-    && uv venv --seed "/venvs/djlint" && PYTHONDONTWRITEBYTECODE=1 uv pip install djlint \
-    && uv venv --seed "/venvs/pylint" && PYTHONDONTWRITEBYTECODE=1 uv pip install pylint typing-extensions \
-    && uv venv --seed "/venvs/black" && PYTHONDONTWRITEBYTECODE=1 uv pip install black \
-    && uv venv --seed "/venvs/flake8" && PYTHONDONTWRITEBYTECODE=1 uv pip install flake8 \
-    && uv venv --seed "/venvs/isort" && PYTHONDONTWRITEBYTECODE=1 uv pip install isort black \
-    && uv venv --seed "/venvs/bandit" && PYTHONDONTWRITEBYTECODE=1 uv pip install bandit bandit_sarif_formatter bandit[toml] \
-    && uv venv --seed "/venvs/mypy" && PYTHONDONTWRITEBYTECODE=1 uv pip install mypy \
-    && uv venv --seed "/venvs/pyright" && PYTHONDONTWRITEBYTECODE=1 uv pip install pyright \
-    && uv venv --seed "/venvs/ruff" && PYTHONDONTWRITEBYTECODE=1 uv pip install ruff \
-    && uv venv --seed "/venvs/checkov" && PYTHONDONTWRITEBYTECODE=1 uv pip install packaging checkov \
-    && uv venv --seed "/venvs/semgrep" && PYTHONDONTWRITEBYTECODE=1 uv pip install semgrep \
-    && uv venv --seed "/venvs/rst-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install restructuredtext_lint \
-    && uv venv --seed "/venvs/rstcheck" && PYTHONDONTWRITEBYTECODE=1 uv pip install rstcheck[toml,sphinx] \
-    && uv venv --seed "/venvs/rstfmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install rstfmt \
-    && uv venv --seed "/venvs/snakemake" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakemake \
-    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 uv pip install snakefmt \
-    && uv venv --seed "/venvs/proselint" && PYTHONDONTWRITEBYTECODE=1 uv pip install proselint \
-    && uv venv --seed "/venvs/sqlfluff" && PYTHONDONTWRITEBYTECODE=1 uv pip install sqlfluff \
-    && uv venv --seed "/venvs/yamllint" && PYTHONDONTWRITEBYTECODE=1 uv pip install yamllint  \
-    && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin:/venvs/cpplint/bin:/venvs/cfn-lint/bin:/venvs/djlint/bin:/venvs/pylint/bin:/venvs/black/bin:/venvs/flake8/bin:/venvs/isort/bin:/venvs/bandit/bin:/venvs/mypy/bin:/venvs/pyright/bin:/venvs/ruff/bin:/venvs/checkov/bin:/venvs/semgrep/bin:/venvs/rst-lint/bin:/venvs/rstcheck/bin:/venvs/rstfmt/bin:/venvs/snakemake/bin:/venvs/snakefmt/bin:/venvs/proselint/bin:/venvs/sqlfluff/bin:/venvs/yamllint/bin
 #PIPVENV__END
