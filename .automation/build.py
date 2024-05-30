@@ -567,8 +567,7 @@ def build_dockerfile(
                 f'    && uv venv --seed "/venvs/{pip_linter}" '
                 + f'&& PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install '
                 + (" ".join(pip_linter_packages))
-                + " "
-                + "\\\n"
+                + " \\\n"
             )
             env_path_command += f":/venvs/{pip_linter}/bin"
         pipenv_install_command = pipenv_install_command[:-2]  # remove last \
