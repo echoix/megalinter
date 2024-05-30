@@ -186,10 +186,10 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-		&& uv --help
-		&& uv venv --help
-		&& uv pip --help
-		&& uv pip install --help
+		&& uv --help \
+		&& uv venv --help \
+		&& uv pip --help \
+		&& uv pip install --help \
     && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install ansible-lint=='24.2.3' \
     && uv venv --seed "/venvs/cpplint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cpplint \
     && uv venv --seed "/venvs/cfn-lint" && PYTHONDONTWRITEBYTECODE=1 uv pip install cfn-lint \
