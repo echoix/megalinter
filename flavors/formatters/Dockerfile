@@ -100,10 +100,10 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/black" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install black \
-    && uv venv --seed "/venvs/isort" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install isort black \
-    && uv venv --seed "/venvs/rstfmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install rstfmt \
-    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install snakefmt  \
+    && uv venv --seed "/venvs/black" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/black" uv pip install black \
+    && uv venv --seed "/venvs/isort" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/isort" uv pip install isort black \
+    && uv venv --seed "/venvs/rstfmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/rstfmt" uv pip install rstfmt \
+    && uv venv --seed "/venvs/snakefmt" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/snakefmt" uv pip install snakefmt  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/black/bin:/venvs/isort/bin:/venvs/rstfmt/bin:/venvs/snakefmt/bin

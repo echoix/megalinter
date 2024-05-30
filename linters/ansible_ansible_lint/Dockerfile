@@ -88,7 +88,7 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/{pip_linter}" uv pip install ansible-lint=='24.2.3'  \
+    && uv venv --seed "/venvs/ansible-lint" && PYTHONDONTWRITEBYTECODE=1 VIRTUAL_ENV="/venvs/ansible-lint" uv pip install ansible-lint=='24.2.3'  \
     && find /venvs \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete \
     && rm -rf /root/.cache
 ENV PATH="${PATH}":/venvs/ansible-lint/bin
