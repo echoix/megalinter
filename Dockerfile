@@ -12,6 +12,9 @@
 #############################################################################################
 #ARGTOP__START
 ARG VERSION_EDITORCONFIG_CHECKER=latest
+# renovate: datasource=docker depName=ghcr.io/terraform-linters/tflint
+ARG TFLINT_VERSION=v0.51.0
+
 #ARGTOP__END
 
 #############################################################################################
@@ -44,7 +47,7 @@ FROM checkmarx/kics:alpine as kics
 FROM trufflesecurity/trufflehog:latest as trufflehog
 FROM jdkato/vale:latest as vale
 FROM lycheeverse/lychee:latest-alpine as lychee
-FROM ghcr.io/terraform-linters/tflint:v0.51.0 as tflint
+FROM ghcr.io/terraform-linters/tflint:${TFLINT_VERSION} as tflint
 FROM tenable/terrascan:1.18.11 as terrascan
 FROM alpine/terragrunt:latest as terragrunt
 # Next FROM line commented because already managed by another linter
@@ -67,7 +70,13 @@ ARG BICEP_EXE='bicep'
 ARG BICEP_URI='https://github.com/Azure/bicep/releases/latest/download/bicep-linux-musl-x64'
 ARG BICEP_DIR='/usr/local/bin'
 ARG DART_VERSION='2.8.4'
+# renovate: datasource=github-tags depName=pmd/pmd extractVersion=^pmd_releases/(?<version>.*)$
+ARG PMD_VERSION=7.1.0
+
 ARG VERSION_KOTLIN_DETEKT='1.23.6'
+# renovate: datasource=nuget depName=PSScriptAnalyzer registryUrl=https://www.powershellgallery.com/api/v2/
+ARG PSSA_VERSION='1.22.0'
+
 #ARG__END
 
 # Static args
@@ -573,9 +582,6 @@ RUN --mount=type=secret,id=GITHUB_TOKEN CHECKSTYLE_LATEST=$(curl -s \
 
 
 # pmd installation
-# renovate: datasource=github-tags depName=pmd/pmd extractVersion=^pmd_releases/(?<version>.*)$
-ARG PMD_VERSION=7.1.0
-
 RUN wget --quiet https://github.com/pmd/pmd/releases/download/pmd_releases%2F${PMD_VERSION}/pmd-dist-${PMD_VERSION}-bin.zip && \
     unzip pmd-dist-${PMD_VERSION}-bin.zip || echo "Error unzipping" && \
     rm pmd-dist-${PMD_VERSION}-bin.zip || echo "Error rm" && \
@@ -642,15 +648,9 @@ RUN --mount=type=secret,id=GITHUB_TOKEN GITHUB_AUTH_TOKEN="$(cat /run/secrets/GI
 
 
 # powershell installation
-# renovate: datasource=nuget depName=PSScriptAnalyzer registryUrl=https://www.powershellgallery.com/api/v2/
-ARG PSSA_VERSION='1.22.0'
-
 RUN pwsh -c 'Install-Module -Name PSScriptAnalyzer -RequiredVersion ${PSSA_VERSION} -Scope AllUsers -Force'
 
 # powershell_formatter installation
-# Next line commented because already managed by another linter
-# # renovate: datasource=nuget depName=PSScriptAnalyzer registryUrl=https://www.powershellgallery.com/api/v2/
-# ARG PSSA_VERSION='1.22.0'
 # Next line commented because already managed by another linter
 # RUN pwsh -c 'Install-Module -Name PSScriptAnalyzer -RequiredVersion ${PSSA_VERSION} -Scope AllUsers -Force'
 
