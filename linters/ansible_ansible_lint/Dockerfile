@@ -88,7 +88,8 @@ RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin || true && \
 
 #PIPVENV__START
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir uv \
-    && uv venv --seed "/venvs/ansible-lint" 
+    && uv venv --seed "/venvs/ansible-lint" \
+    && UV_VENV=/venvs/ansible-lint uv pip install ansible-lint
 ENV PATH="${PATH}":/venvs/ansible-lint/bin
 #PIPVENV__END
 
