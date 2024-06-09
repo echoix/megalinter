@@ -14,7 +14,7 @@
 #ARGTOP__START
 ARG EDITORCONFIG_CHECKER_VERSION=latest
 # renovate: datasource=docker depName=ghcr.io/terraform-linters/tflint
-ARG TFLINT_VERSION=v0.51.0
+ARG TFLINT_VERSION=0.51.0
 
 #ARGTOP__END
 
@@ -42,7 +42,7 @@ FROM zricethezav/gitleaks:v8.18.2 as gitleaks
 FROM checkmarx/kics:alpine as kics
 FROM trufflesecurity/trufflehog:latest as trufflehog
 FROM lycheeverse/lychee:latest-alpine as lychee
-FROM ghcr.io/terraform-linters/tflint:${TFLINT_VERSION} as tflint
+FROM ghcr.io/terraform-linters/tflint:v${TFLINT_VERSION} as tflint
 FROM tenable/terrascan:1.18.11 as terrascan
 FROM alpine/terragrunt:latest as terragrunt
 # Next FROM line commented because already managed by another linter
