@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "config:best-practices", // To enable once renovate usage is stabilized
+    //"config:best-practices", // To enable once renovate usage is stabilized
     "customManagers:dockerfileVersions",
     ":maintainLockFilesWeekly",
     ":separateMultipleMajorReleases",
