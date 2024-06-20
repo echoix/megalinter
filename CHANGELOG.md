@@ -87,6 +87,15 @@ Note: Can be used with `oxsecurity/megalinter@beta` in your GitHub Action mega-l
   - [terragrunt](https://terragrunt.gruntwork.io) from 0.58.14 to **0.59.3** on 2024-06-16
   - [php-cs-fixer](https://cs.symfony.com/) from 3.59.1 to **3.59.3** on 2024-06-17
   - [checkov](https://www.checkov.io/) from 3.2.136 to **3.2.137** on 2024-06-17
+  - [cfn-lint](https://github.com/aws-cloudformation/cfn-lint) from 0.87.7 to **1.3.1** on 2024-06-20
+  - [phpstan](https://phpstan.org/) from 1.11.4 to **1.11.5** on 2024-06-20
+  - [psalm](https://psalm.dev) from Psalm.5.24.0@ to **Psalm.5.25.0@** on 2024-06-20
+  - [pyright](https://github.com/Microsoft/pyright) from 1.1.367 to **1.1.368** on 2024-06-20
+  - [ruff](https://github.com/astral-sh/ruff) from 0.4.9 to **0.4.10** on 2024-06-20
+  - [checkov](https://www.checkov.io/) from 3.2.137 to **3.2.141** on 2024-06-20
+  - [grype](https://github.com/anchore/grype) from 0.79.0 to **0.79.1** on 2024-06-20
+  - [cspell](https://github.com/streetsidesoftware/cspell/tree/master/packages/cspell) from 8.8.4 to **8.9.1** on 2024-06-20
+  - [vale](https://vale.sh/) from 3.5.0 to **3.6.0** on 2024-06-20
 <!-- linter-versions-end -->
 
 ## [v7.12.0] - 2024-06-02
