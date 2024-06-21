@@ -10,12 +10,15 @@ Note: Can be used with `oxsecurity/megalinter@beta` in your GitHub Action mega-l
 
 - Core
   - Handle renovate version comments in build script
+  - Update base image to python:3.12.4-alpine3.20
 
 - Media
 
 - Linters
   - Add python package Pygments to rst-lint venv
   - [CSharpier](https://csharpier.com) added ability to override config filename and path
+  - Downgraded cfn-lint to v0.87.7 as output format changed in v1.3.0.
+  - Downgraded phpstan to v1.11.4 as results aren't shown during tests in v1.11.5.
 
 - Reporters
 
