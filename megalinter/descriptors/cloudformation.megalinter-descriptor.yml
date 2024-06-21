@@ -30,9 +30,11 @@ linters:
     examples:
       - "cfn-lint myfile.yml"
       - "cfn-lint --config-file .cfnlintrc.yml myfile.yml"
+    downgraded_version: true
+    downgraded_reason: Output format changed and regex rewritten
     install:
       pip:
-        - cfn-lint
+        - cfn-lint===0.87.7
     ide:
       atom:
         - name: atom-cfn-lint
