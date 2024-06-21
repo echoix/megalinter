@@ -59,6 +59,10 @@ CVE-2024-3817
 # Misc
 # Not fixed yet https://avd.aquasec.com/nvd/2024/cve-2024-29415/
 CVE-2024-29415
+# Not fixed yet Go binaries using stdlib zip https://avd.aquasec.com/nvd/2024/cve-2024-24789/
+CVE-2024-24789
+# Not fixed yet Go binaries using stdlib net https://avd.aquasec.com/nvd/2024/cve-2024-24790/
+CVE-2024-24790
 
 # Dockerfile
 DS001
