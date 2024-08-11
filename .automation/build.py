@@ -3281,7 +3281,8 @@ def generate_version():
         ["hatch", "version", RELEASE_TAG],
         stdout=subprocess.PIPE,
         text=True,
-        shell=True, check=False,
+        shell=True,
+        check=False,
     )
     # Update changelog
     if UPDATE_CHANGELOG is True:
