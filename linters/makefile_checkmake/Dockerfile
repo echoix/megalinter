@@ -135,9 +135,8 @@ COPY --link --from=checkmake /checkmake /usr/bin/checkmake
 ################################
 # Installs python dependencies #
 ################################
-COPY megalinter /megalinter
-RUN PYTHONDONTWRITEBYTECODE=1 python /megalinter/setup.py install \
-    && PYTHONDONTWRITEBYTECODE=1 python /megalinter/setup.py clean --all \
+RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
+    pip3 cache purge \
     && rm -rf /var/cache/apk/* \
     && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
 
