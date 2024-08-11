@@ -146,6 +146,9 @@ COPY --link --from=shellcheck /bin/shellcheck /usr/bin/shellcheck
 # Installs python dependencies #
 ################################
 RUN ls -la
+COPY megalinter /megalinter
+RUN ls -la
+RUN ls -la /megalinter
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
     && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
