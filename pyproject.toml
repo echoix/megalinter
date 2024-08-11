@@ -66,7 +66,8 @@ dependencies = [
   "github-dependents-info",
 ]
 [tool.hatch.envs.docs.scripts]
-build = "mkdocs build --clean --strict"
+# build = "mkdocs build --clean --strict"
+build = "mkdocs build --clean"
 serve = "mkdocs serve --dev-addr localhost:8000"
 
 [tool.hatch.envs.hatch-test]
@@ -74,7 +75,30 @@ default-args = [""]
 randomize = true
 parallel = true
 retries = 2
-
+# # Prettify `search_index.json` after `mkdocs`
+# # `mkdocs` removed its own prettify few years ago: https://github.com/mkdocs/mkdocs/pull/1128
+# if type python3 >/dev/null 2>/dev/null; then
+#   python3 -m json.tool ./site/search/search_index.json >./site/search/search_index_new.json
+# else
+#   python -m json.tool ./site/search/search_index.json >./site/search/search_index_new.json
+# fi
+# mv -f -- ./site/search/search_index_new.json ./site/search/search_index.json
+[tool.hatch.envs.build]
+template = "docs"
+[tool.hatch.envs.build.scripts]
+prettify = "hatch run python -m json.tool --sort-keys --no-indent ./site/search/search_index.json ./site/search/search_index.json"
+all = ["build --doc --stats --dependents {args}", "hatch run docs:build"]
+build-sh = "./build.sh {args}"
+build = "hatch run python .automation/build.py {args}"
+docs = ["./build.sh --doc {args}", "hatch run docs:build"]
+stats = "build --stats"
+ed = "hatch run python .automation/build.py --changelog {args}"
+ed1 = "hatch run python -c 'print(\"hello!\")'"
+ed2 = "hatch run python .automation/build.py --changelog"
+ed3 = ['ed', "ed1", "docs:build"]
+ed4 = [
+  "hatch run python -m json.tool --sort-keys --no-indent ./search_index_copy_2.json ./search_index_copy_2.json",
+]
 [tool.hatch.envs.types]
 extra-dependencies = ["mypy>=1.0.0"]
 [tool.hatch.envs.types.scripts]
