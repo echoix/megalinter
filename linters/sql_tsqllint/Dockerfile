@@ -138,7 +138,7 @@ RUN dotnet tool install --global TSQLLint
 # Installs python dependencies #
 ################################
 RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
-    pip3 cache purge \
+    && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
     && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
 
