@@ -83,10 +83,10 @@ FROM python:3.12.4-alpine3.20 AS build-ml-core
 COPY pyproject.toml .
 COPY --from=uv /uv /bin/uv
 RUN --mount=type=cache,target=/root/.cache/uv \
-     uv pip install -r pyproject.toml
+     uv pip install --system -r pyproject.toml
 COPY . .
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install .
+    uv pip install --system .
 
 #RUN --mount=type=cache,target=/root/.cache/uv \
 # ./uv pip install -r requirements.txt -->
