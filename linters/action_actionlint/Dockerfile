@@ -26,6 +26,14 @@ FROM rhysd/actionlint:${ACTION_ACTIONLINT_VERSION} AS actionlint
 FROM koalaman/shellcheck:${BASH_SHELLCHECK_VERSION} AS shellcheck
 #FROM__END
 
+
+FROM python:3.12.4-alpine3.20 as build-ml-core
+COPY pyproject.toml README.md ./app
+COPY . /app
+WORKDIR /app
+RUN python -m pip wheel --wheel-dir /wheel .
+
+
 ##################
 # Get base image #
 ##################
@@ -146,11 +154,14 @@ COPY --link --from=shellcheck /bin/shellcheck /usr/bin/shellcheck
 # Installs python dependencies #
 ################################
 RUN ls -la
-COPY pyproject.toml ./
-COPY megalinter /megalinter
-RUN ls -la
-RUN ls -la /megalinter
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
+# COPY pyproject.toml ./
+#COPY megalinter /megalinter
+#RUN ls -la
+# RUN ls -la /megalinter
+RUN --mount=type=bind,from=build-ml-core,source=/wheel \
+		ls -la && \
+m
+    PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
     && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
     && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
