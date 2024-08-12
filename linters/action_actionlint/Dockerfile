@@ -26,8 +26,10 @@ FROM rhysd/actionlint:${ACTION_ACTIONLINT_VERSION} AS actionlint
 FROM koalaman/shellcheck:${BASH_SHELLCHECK_VERSION} AS shellcheck
 #FROM__END
 
-
-FROM python:3.12.4-alpine3.20 as build-ml-core
+##################
+# Build wheel for megalinter python package
+##################
+FROM python:3.12.4-alpine3.20 AS build-ml-core
 COPY pyproject.toml /app/
 COPY . /app/
 WORKDIR /app
@@ -153,13 +155,7 @@ COPY --link --from=shellcheck /bin/shellcheck /usr/bin/shellcheck
 ################################
 # Installs python dependencies #
 ################################
-RUN ls -la
-# COPY pyproject.toml ./
-#COPY megalinter /megalinter
-#RUN ls -la
-# RUN ls -la /megalinter
 RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
-		ls -la && \
     PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir /wheel/megalinter*.whl \
     && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
