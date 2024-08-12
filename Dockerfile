@@ -800,7 +800,8 @@ RUN curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | 
 ################################
 # Installs python dependencies #
 ################################
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
+RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
+    PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir /wheel/megalinter*.whl \
     && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
     && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
