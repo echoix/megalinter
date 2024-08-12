@@ -160,7 +160,6 @@ RUN ls -la
 # RUN ls -la /megalinter
 RUN --mount=type=bind,from=build-ml-core,source=/wheel \
 		ls -la && \
-m
     PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
     && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
