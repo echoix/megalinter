@@ -25,11 +25,21 @@ FROM ghcr.io/terraform-linters/tflint:v${TERRAFORM_TFLINT_VERSION} AS tflint
 ##################
 # Build wheel for megalinter python package
 ##################
+FROM ghcr.io/astral-sh/uv:0.2.35 AS uv
 FROM python:3.12.4-alpine3.20 AS build-ml-core
-COPY pyproject.toml /app/
-COPY . /app/
-WORKDIR /app
-RUN python -m pip wheel --wheel-dir /wheel .
+COPY pyproject.toml .
+COPY --from=uv /uv /bin/uv
+RUN --mount=type=cache,target=/root/.cache/uv \
+     uv pip install --system -r pyproject.toml
+COPY . .
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --system .
+
+#RUN --mount=type=cache,target=/root/.cache/uv \
+# ./uv pip install -r requirements.txt -->
+#COPY . /app/
+#WORKDIR /app
+#RUN python -m pip wheel --wheel-dir /wheel .
 
 ##################
 # Get base image #
@@ -145,11 +155,13 @@ COPY --link --from=tflint /usr/local/bin/tflint /usr/bin/
 ################################
 # Installs python dependencies #
 ################################
-RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
-    PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir /wheel/megalinter*.whl \
-    && pip3 cache purge \
-    && rm -rf /var/cache/apk/* \
-    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
+RUN --mount=type=cache,target=/root/.cache/uv,from=build-ml-core \
+    uv pip install megalinter
+#RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
+#    PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir /wheel/megalinter*.whl \
+#    && pip3 cache purge \
+#    && rm -rf /var/cache/apk/* \
+#    && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
 
 #######################################
 # Copy scripts and rules to container #
