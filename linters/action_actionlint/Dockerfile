@@ -29,7 +29,7 @@ FROM koalaman/shellcheck:${BASH_SHELLCHECK_VERSION} AS shellcheck
 
 FROM python:3.12.4-alpine3.20 as build-ml-core
 COPY pyproject.toml README.md ./app
-COPY . /app
+COPY . /app/
 WORKDIR /app
 RUN python -m pip wheel --wheel-dir /wheel .
 
