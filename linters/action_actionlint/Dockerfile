@@ -158,7 +158,7 @@ RUN ls -la
 #COPY megalinter /megalinter
 #RUN ls -la
 # RUN ls -la /megalinter
-RUN --mount=type=bind,from=build-ml-core,source=/wheel \
+RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
 		ls -la && \
     PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
     && pip3 cache purge \
