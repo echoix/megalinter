@@ -146,6 +146,7 @@ COPY --link --from=shellcheck /bin/shellcheck /usr/bin/shellcheck
 # Installs python dependencies #
 ################################
 RUN ls -la
+COPY pyproject.toml ./
 COPY megalinter /megalinter
 RUN ls -la
 RUN ls -la /megalinter
