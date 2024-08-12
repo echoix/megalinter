@@ -76,6 +76,15 @@ FROM alpine/terragrunt:${TERRAFORM_TERRAGRUNT_VERSION} AS terragrunt
 #FROM__END
 
 ##################
+# Build wheel for megalinter python package
+##################
+FROM python:3.12.4-alpine3.20 AS build-ml-core
+COPY pyproject.toml /app/
+COPY . /app/
+WORKDIR /app
+RUN python -m pip wheel --wheel-dir /wheel .
+
+##################
 # Get base image #
 ##################
 FROM python:3.12.4-alpine3.20
