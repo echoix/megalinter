@@ -234,8 +234,12 @@ RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh |
 ################################
 # Installs python dependencies #
 ################################
+COPY --from=build-ml-core pyproject.toml README.md ./
+COPY --from=build-ml-core megalinter /megalinter/
 RUN --mount=type=cache,target=/root/.cache/uv,from=build-ml-core \
-    uv pip install megalinter
+    --mount=from=uv,source=/uv,target=/bin/uv \
+    uv pip install --system -e .
+
 #RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
 #    PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir /wheel/megalinter*.whl \
 #    && pip3 cache purge \
