@@ -35,7 +35,6 @@ COPY . /app/
 WORKDIR /app
 RUN python -m pip wheel --wheel-dir /wheel .
 
-
 ##################
 # Get base image #
 ##################

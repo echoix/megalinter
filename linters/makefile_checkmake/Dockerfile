@@ -22,6 +22,15 @@ FROM mrtazz/checkmake:latest AS checkmake
 #FROM__END
 
 ##################
+# Build wheel for megalinter python package
+##################
+FROM python:3.12.4-alpine3.20 AS build-ml-core
+COPY pyproject.toml /app/
+COPY . /app/
+WORKDIR /app
+RUN python -m pip wheel --wheel-dir /wheel .
+
+##################
 # Get base image #
 ##################
 FROM python:3.12.4-alpine3.20
@@ -135,7 +144,8 @@ COPY --link --from=checkmake /checkmake /usr/bin/checkmake
 ################################
 # Installs python dependencies #
 ################################
-RUN PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir . \
+RUN --mount=type=bind,from=build-ml-core,source=/wheel,target=/wheel \
+    PYTHONDONTWRITEBYTECODE=1 pip3 install --no-cache-dir /wheel/megalinter*.whl \
     && pip3 cache purge \
     && rm -rf /var/cache/apk/* \
     && find . \( -type f \( -iname \*.pyc -o -iname \*.pyo \) -o -type d -iname __pycache__ \) -delete
