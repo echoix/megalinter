@@ -93,6 +93,8 @@ linters:
           ARG GO_REVIVE_VERSION=v1.3.9
           RUN GOBIN=/usr/bin go install github.com/mgechev/revive@$GO_REVIVE_VERSION
         - COPY --link --from=revive /usr/bin/revive /usr/bin/revive
+        - ENV GOPATH /go
+        - ENV PATH="${GOPATH}/bin:/usr/local/go/bin:${PATH}"
     ide:
       atom:
         - name: linter-revive
