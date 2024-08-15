@@ -78,6 +78,8 @@ linters:
     downgraded_version: true
     downgraded_reason: building fails in https://github.com/oxsecurity/megalinter/pull/3802
     install:
+      apk:
+        - go
       dockerfile:
         ## Until "FROM ghcr.io/mgechev/revive:1.2.5 AS revive" is available, use
         # - FROM ghcr.io/mgechev/revive:1.2.5 AS revive
