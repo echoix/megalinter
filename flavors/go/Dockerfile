@@ -280,6 +280,8 @@ RUN printf '#!/bin/bash \n\nif [[ -x "$1" ]]; then exit 0; else echo "Error: Fil
 #
 # revive installation
 # Managed with COPY --link --from=revive /usr/bin/revive /usr/bin/revive
+ENV GOPATH /go
+ENV PATH="${GOPATH}/bin:/usr/local/go/bin:${PATH}"
 #
 # npm-groovy-lint installation
 ENV JAVA_HOME_17=/usr/lib/jvm/java-17-openjdk

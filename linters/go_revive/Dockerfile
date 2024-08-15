@@ -136,6 +136,8 @@ COPY --link --from=revive /usr/bin/revive /usr/bin/revive
 #OTHER__START
 # revive installation
 # Managed with COPY --link --from=revive /usr/bin/revive /usr/bin/revive
+ENV GOPATH /go
+ENV PATH="${GOPATH}/bin:/usr/local/go/bin:${PATH}"
 #
 #OTHER__END
 

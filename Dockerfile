@@ -594,6 +594,8 @@ RUN curl --retry 5 --retry-delay 5 -sLO "${ARM_TTK_URI}" \
 #
 # revive installation
 # Managed with COPY --link --from=revive /usr/bin/revive /usr/bin/revive
+ENV GOPATH /go
+ENV PATH="${GOPATH}/bin:/usr/local/go/bin:${PATH}"
 #
 # npm-groovy-lint installation
 ENV JAVA_HOME_17=/usr/lib/jvm/java-17-openjdk
