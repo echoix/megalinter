@@ -45,7 +45,7 @@ fi
 # Run test cases with pytest
 if [ "${TEST_CASE_RUN}" == "true" ]; then
   echo "[MegaLinter init] RUNNING TEST CASES"
-  pip install pytest-cov pytest-timeout pytest-xdist
+  pip install pytest-cov pytest-timeout pytest-xdist[psutil]
   if [ -z "${TEST_KEYWORDS}" ]; then
     pytest -v --timeout=300 --durations=0 --cov=megalinter --cov-report=xml --numprocesses auto --dist loadscope megalinter/
   else
