@@ -2345,32 +2345,13 @@ make-fetch-happen@^13.0.0, make-fetch-happen@^13.0.1:
     promise-retry "^2.0.1"
     ssri "^10.0.0"
 
-mem-fs-editor@^11.0.0:
+mem-fs-editor@^11.0.0, mem-fs-editor@^11.0.1:
   version "11.1.2"
   resolved "https://registry.yarnpkg.com/mem-fs-editor/-/mem-fs-editor-11.1.2.tgz#9ee84ee8889c6a9b8c1ccedc736e0f01f4558090"
   integrity sha512-yUVFK96XhGv31iWZ3G60pGNIuXuZTUsWz0GQzv9ffjYFf1oXs0PcD3LFZHzRDImH+Da21x/C4csEjN0W5ygdQA==
   dependencies:
     "@types/ejs" "^3.1.4"
     "@types/node" ">=18"
-    binaryextensions "^6.11.0"
-    commondir "^1.0.1"
-    deep-extend "^0.6.0"
-    ejs "^3.1.10"
-    globby "^14.0.2"
-    isbinaryfile "5.0.2"
-    minimatch "^9.0.3"
-    multimatch "^7.0.0"
-    normalize-path "^3.0.0"
-    textextensions "^6.11.0"
-    vinyl "^3.0.0"
-
-mem-fs-editor@^11.0.1:
-  version "11.1.1"
-  resolved "https://registry.yarnpkg.com/mem-fs-editor/-/mem-fs-editor-11.1.1.tgz#739bea0d0fdd7bedc068e7873fe2f331415cd3b5"
-  integrity sha512-bjBczabthdOjNE9+gRk+wObTihMgwkrhr/ffk7e+adZk0F5I3i5fE/MApOwSG/JYmFAfpoThPkA6i+kKShcl0w==
-  dependencies:
-    "@types/ejs" "^3.1.4"
-    "@types/node" "^18.18.5"
     binaryextensions "^6.11.0"
     commondir "^1.0.1"
     deep-extend "^0.6.0"
