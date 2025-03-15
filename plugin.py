@@ -156,16 +156,27 @@ class LightboxPlugin(BasePlugin):
         # lambda match: self.wrap_img_with_anchor(
         #     match, plugin_config, skip_class, page.meta
         # ),
-        html = pattern.sub(
-            # lambda match: match.group(0),
+        # html = pattern.sub(
+        #     # lambda match: match.group(0),
+        #     lambda match: self.wrap_img_with_anchor(
+        #         match, plugin_config, skip_class, page.meta
+        #     ),
+        #     html,
+        #     # flags=re.DEBUG
+        # )
+        pattern1 = re.compile(
+            r"<a\b[^>]*>(?:\s*<[^>]+>\s*)*<img\b[^>]*>(?:\s*<[^>]+>\s*)*</a>", flags=re.DEBUG
+        )
+        pattern2 = re.compile(
+            r"<img(?P<attr>.*?)>", flags=re.DEBUG
+        )
+        log.warning("Ending on_page_content replace")
+        html = pattern1.sub(
             lambda match: self.wrap_img_with_anchor(
                 match, plugin_config, skip_class, page.meta
             ),
             html,
-            # flags=re.DEBUG
         )
-        log.warning("Ending on_page_content replace")
-
         return html
 
     def wrap_img_with_anchor(self, match, plugin_config, skip_class, meta):
