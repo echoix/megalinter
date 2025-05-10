@@ -122,7 +122,7 @@ ARG POWERSHELL_VERSION=7.5.1
 # renovate: datasource=npm depName=@salesforce/cli
 ARG NPM_SALESFORCE_CLI_VERSION=2.84.6
 # renovate: datasource=npm depName=@salesforce/plugin-packaging
-ARG NPM_SALESFORCE_PLUGIN_PACKAGING_VERSION=2.13.1
+ARG NPM_SALESFORCE_PLUGIN_PACKAGING_VERSION=2.13.3
 # renovate: datasource=npm depName=sfdx-hardis
 ARG SFDX_HARDIS_VERSION=5.32.0
 # renovate: datasource=npm depName=typescript
