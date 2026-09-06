@@ -57,7 +57,7 @@ ARG TARGETARCH
 # renovate: datasource=pypi depName=semgrep
 ARG PIP_SEMGREP_VERSION=1.170.0
 # renovate: datasource=pypi depName=pip
-ARG PIP_PIP_VERSION=26.1.2
+ARG PIP_PIP_VERSION=26.2
 # renovate: datasource=pypi depName=virtualenv
 ARG PIP_VIRTUALENV_VERSION=21.6.1
 #ARG__END
