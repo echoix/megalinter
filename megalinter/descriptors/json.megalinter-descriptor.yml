@@ -208,7 +208,7 @@ linters:
           ARG NPM_ESLINT_VERSION=10.7.0
         - |-
           # renovate: datasource=npm depName=@eslint/eslintrc
-          ARG NPM_ESLINT_ESLINTRC_VERSION=3.3.6
+          ARG NPM_ESLINT_ESLINTRC_VERSION=3.3.7
         - |-
           # renovate: datasource=npm depName=eslint-plugin-jsonc
           ARG NPM_ESLINT_PLUGIN_JSONC_VERSION=3.3.0
